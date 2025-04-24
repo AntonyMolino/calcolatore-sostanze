@@ -238,6 +238,11 @@
                 } else {
                     dettagli += `• ${quantitaNum} ${tipo} (tipo non valido)<br>`;
                 }
+
+                document.getElementById('famiglia').value = '';
+                document.getElementById('sostanze').value = '';
+                document.getElementById('sanzione').value = '';
+
             });
 
             // Calcola il totale netto (dopo la sanzione)
