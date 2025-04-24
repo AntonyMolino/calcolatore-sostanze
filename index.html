@@ -63,7 +63,7 @@
             background-color: #45a049;
         }
 
-        
+
         #deleteButton {
             background-color: red;
             color: white;
@@ -147,29 +147,35 @@
         }
 
         function salvaDati() {
-        localStorage.setItem("famiglieDroghe", JSON.stringify(risultati));
-    }
+            localStorage.setItem("famiglieDroghe", JSON.stringify(risultati));
+        }
 
-    function eliminaDati() {
-        localStorage.removeItem("famiglieDroghe");
-        alert('Dati eliminati')
-        risultati = [];
-        mostraRisultati();
-    }
-
-    function caricaDati() {
-        const datiSalvati = localStorage.getItem("famiglieDroghe");
-        if (datiSalvati) {
-            risultati = JSON.parse(datiSalvati);
+        function eliminaDati() {
+            localStorage.removeItem("famiglieDroghe");
+            alert('Dati eliminati')
+            risultati = [];
             mostraRisultati();
         }
-    }
+
+        function caricaDati() {
+            const datiSalvati = localStorage.getItem("famiglieDroghe");
+            if (datiSalvati) {
+                risultati = JSON.parse(datiSalvati);
+                mostraRisultati();
+            }
+        }
 
 
         function aggiungiRisultato() {
             const nomeFamiglia = document.getElementById('famiglia').value;
             const sostanze = document.getElementById('sostanze').value.split(',');
             const sanzione = parseFloat(document.getElementById('sanzione').value) || 0;
+
+
+            if (!nomeFamiglia || sostanze.length === 0) {
+                alert("Per favore, completa tutti i campi correttamente!");
+                return;
+            }
 
             // Calcola il totale delle sostanze
             let totale = 0;
@@ -183,12 +189,10 @@
                     case 'cocaina':
                     case 'coca':
                         prezzoUnitario = 500;
-                        tipo = 'cocaina';
                         break;
                     case 'ketamina':
                     case 'keta':
                         prezzoUnitario = 380;
-                        tipo = 'ketamina';
                         break;
                     case 'eroina':
                         prezzoUnitario = 450;
@@ -197,12 +201,10 @@
                     case 'acido':
                     case 'francobolli':
                         prezzoUnitario = 420;
-                        tipo = 'lsd';
                         break;
                     case 'maria':
                     case 'marijuana':
                         prezzoUnitario = 400;
-                        tipo = 'marijuana';
                         break;
                     case 'fenicillina':
                         prezzoUnitario = 380;
@@ -239,6 +241,10 @@
         }
 
         function mostraRisultati() {
+
+            document.getElementById('totale').innerHTML = 'Caricamento...';
+            document.getElementById('result').style.display = 'block';
+
             // Ordina i risultati in base al totale
             risultati.sort((a, b) => b.totale - a.totale);
 
