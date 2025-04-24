@@ -282,23 +282,16 @@
                         : `${fam.famiglia} – 🔻 Da prelevare: ${formattaNumero(Math.abs(fam.totaleNetto))}€`;
 
                     resultText += `
-                <div class="famiglia">${intestazione}</div>
-                <div class="dettagli">${fam.dettagli}</div>`;
-
-                    // Aggiungi la sanzione solo se è maggiore di zero
-                    if (fam.sanzione > 0) {
-                        resultText += `<div class="sanzione">💸 Sanzione: ${formattaNumero(fam.sanzione)}€</div>`;
-                    }
-
-                    // Mostra il totale netto (o "Da prelevare" se negativo)
-                    resultText += `
-                <div class="totale-netto">
-                    ${fam.totaleNetto >= 0
+                        <div class="famiglia">${intestazione}</div>
+                        <div class="dettagli">${fam.dettagli}</div>
+                        <div class="sanzione">💸 Sanzione: ${formattaNumero(fam.sanzione)}€</div>
+                        <div class="totale-netto">
+                         ${fam.totaleNetto >= 0
                             ? `➡️ Totale netto: ${formattaNumero(fam.totaleNetto)}€`
                             : `🔻 Da prelevare: ${formattaNumero(Math.abs(fam.totaleNetto))}€`}
-                </div>
-                <br>
-            `;
+                        </div>
+                        <br>
+                        `;
                 }
             });
 
