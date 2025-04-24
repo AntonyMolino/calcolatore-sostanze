@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calcolo Totale Sostanze</title>
+    <style>
+        /* Aggiungi qui il CSS che ti ho fornito sopra */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+            overflow-x: hidden;
+            /* Evita overflow orizzontale */
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            min-height: 100vh;
+            /* Permette alla pagina di occupare almeno l'altezza totale della finestra */
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin: 8px 0;
+            color: #555;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0 15px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        #addButton {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border: none;
+            width: 100%;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #addButton:hover {
+            background-color: #45a049;
+        }
+
+        
+        #deleteButton {
+            background-color: red;
+            color: white;
+            padding: 10px;
+            border: none;
+            width: 100%;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #deleteButton:hover {
+            background-color: brown;
+        }
+
+        #result {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            max-height: 60vh;
+            /* Limita l'altezza massima del risultato */
+            overflow-y: auto;
+            /* Permette lo scroll verticale se il contenuto è troppo lungo */
+        }
+
+        .famiglia {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            /* Distanza tra ogni famiglia */
+        }
+
+        .dettagli,
+        .sanzione,
+        .totale-netto {
+            margin: 10px 0;
+        }
+
+        hr {
+            margin: 10px 0;
+            border: 0;
+            border-top: 1px solid #ddd;
+        }
+
+        .totale {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Calcolatore di Totale Sostanze</h1>
+
+        <label for="famiglia">Nome Famiglia:</label>
+        <input type="text" id="famiglia" placeholder="Inserisci il nome della famiglia">
+
+        <label for="sostanze">Sostanze e Quantità (es: 600 cocaina, 1000 eroina):</label>
+        <input type="text" id="sostanze" placeholder="Inserisci sostanze e quantità">
+
+        <label for="sanzione">Sanzione (in euro):</label>
+        <input type="number" id="sanzione" placeholder="Inserisci la sanzione">
+
+        <button onclick="aggiungiRisultato()" id="addButton">Aggiungi Famiglia</button>
+        <br>
+        <button onclick="eliminaDati()" id="deleteButton">Elimina Tutto</button>
+
+        <div id="result" style="display: none;">
+            <h2>Risultati</h2>
+            <div id="totale"></div>
+        </div>
+    </div>
+
+    <script>
+        // Dati di esempio
+        let risultati = [];
+
+        function formattaNumero(num) {
+            return num.toLocaleString();
+        }
+
+        function salvaDati() {
+        localStorage.setItem("famiglieDroghe", JSON.stringify(risultati));
+    }
+
+    function eliminaDati() {
+        localStorage.removeItem("famiglieDroghe");
+        alert('Dati eliminati')
+        risultati = [];
+        mostraRisultati();
+    }
+
+    function caricaDati() {
+        const datiSalvati = localStorage.getItem("famiglieDroghe");
+        if (datiSalvati) {
+            risultati = JSON.parse(datiSalvati);
+            mostraRisultati();
+        }
+    }
+
+
+        function aggiungiRisultato() {
+            const nomeFamiglia = document.getElementById('famiglia').value;
+            const sostanze = document.getElementById('sostanze').value.split(',');
+            const sanzione = parseFloat(document.getElementById('sanzione').value) || 0;
+
+            // Calcola il totale delle sostanze
+            let totale = 0;
+            let dettagli = '';
+            sostanze.forEach(sostanza => {
+                const [quantita, tipo] = sostanza.trim().split(' ');
+                const quantitaNum = parseFloat(quantita);
+
+                let prezzoUnitario = 0;
+                switch (tipo.toLowerCase()) {
+                    case 'cocaina':
+                    case 'coca':
+                        prezzoUnitario = 500;
+                        break;
+                    case 'ketamina':
+                    case 'keta':
+                        prezzoUnitario = 380;
+                        break;
+                    case 'eroina':
+                        prezzoUnitario = 450;
+                        break;
+                    case 'lsd':
+                    case 'acido':
+                    case 'francobolli':
+                        prezzoUnitario = 420;
+                        break;
+                    case 'maria':
+                    case 'marijuana':
+                        prezzoUnitario = 400;
+                        break;
+                    case 'fenicillina':
+                        prezzoUnitario = 380;
+                        break;
+                    default:
+                        prezzoUnitario = 0;
+                }
+
+
+                if (prezzoUnitario > 0) {
+                    const valore = quantitaNum * prezzoUnitario;
+                    totale += valore;
+                    dettagli += `• ${quantitaNum} ${tipo} (${formattaNumero(valore)}€)<br>`;
+                }
+            });
+
+            // Calcola il totale netto (dopo la sanzione)
+            const totaleNetto = totale - sanzione;
+
+            // Aggiungi il risultato all'array
+            risultati.push({
+                famiglia: nomeFamiglia,
+                totale: totale,
+                dettagli: dettagli,
+                sanzione: sanzione,
+                totaleNetto: totaleNetto
+            });
+
+            //salva dati
+            salvaDati();
+
+            // Mostra i risultati
+            mostraRisultati();
+        }
+
+        function mostraRisultati() {
+            // Ordina i risultati in base al totale
+            risultati.sort((a, b) => b.totale - a.totale);
+
+            // Costruisci il risultato da visualizzare
+            let resultText = '';
+            risultati.forEach(fam => {
+                if (fam.totale > 0) {
+                    const intestazione = fam.totaleNetto >= 0
+                        ? `${fam.famiglia} – ${formattaNumero(fam.totaleNetto)}€`
+                        : `${fam.famiglia} – 🔻 Da prelevare: ${formattaNumero(Math.abs(fam.totaleNetto))}€`;
+
+                    resultText += `
+                        <div class="famiglia">${intestazione}</div>
+                        <div class="dettagli">${fam.dettagli}</div>
+                        <div class="sanzione">💸 Sanzione: ${formattaNumero(fam.sanzione)}€</div>
+                        <div class="totale-netto">
+                         ${fam.totaleNetto >= 0
+                            ? `➡️ Totale netto: ${formattaNumero(fam.totaleNetto)}€`
+                            : `🔻 Da prelevare: ${formattaNumero(Math.abs(fam.totaleNetto))}€`}
+        </div>
+        <br>
+    `;
+                }
+            });
+
+            // Inserisci i risultati nel contenitore
+            document.getElementById('totale').innerHTML = resultText;
+            document.getElementById('result').style.display = 'block';
+        }
+
+        window.onload = caricaDati;
+    </script>
+
+</body>
+
+</html>
