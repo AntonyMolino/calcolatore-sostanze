@@ -171,10 +171,31 @@
             const sostanze = document.getElementById('sostanze').value.split(',');
             const sanzione = parseFloat(document.getElementById('sanzione').value) || 0;
 
-
-            if (!nomeFamiglia || sostanze.length === 0) {
+            // Verifica che i campi non siano vuoti
+            if (!nomeFamiglia || sostanze.length === 0 || isNaN(sanzione)) {
                 alert("Per favore, completa tutti i campi correttamente!");
                 return;
+            }
+
+            // Mappa delle sostanze e dei sinonimi
+            const sostanzeMappa = {
+                cocaina: ['cocaina', 'coca'],
+                ketamina: ['ketamina', 'keta'],
+                eroina: ['eroina'],
+                lsd: ['lsd', 'acido', 'francobolli'],
+                marijuana: ['maria', 'marijuana'],
+                fenicillina: ['fenicillina']
+            };
+
+            // Funzione per ottenere il tipo corretto dalla mappa
+            function getTipoCorretto(tipo) {
+                tipo = tipo.toLowerCase();
+                for (let key in sostanzeMappa) {
+                    if (sostanzeMappa[key].includes(tipo)) {
+                        return key;  // Restituisce il nome corretto della sostanza
+                    }
+                }
+                return null;  // Se non viene trovato, restituisce null
             }
 
             // Calcola il totale delle sostanze
@@ -184,40 +205,38 @@
                 const [quantita, tipo] = sostanza.trim().split(' ');
                 const quantitaNum = parseFloat(quantita);
 
+                const tipoCorretto = getTipoCorretto(tipo);
                 let prezzoUnitario = 0;
-                switch (tipo.toLowerCase()) {
-                    case 'cocaina':
-                    case 'coca':
-                        prezzoUnitario = 500;
-                        break;
-                    case 'ketamina':
-                    case 'keta':
-                        prezzoUnitario = 380;
-                        break;
-                    case 'eroina':
-                        prezzoUnitario = 450;
-                        break;
-                    case 'lsd':
-                    case 'acido':
-                    case 'francobolli':
-                        prezzoUnitario = 420;
-                        break;
-                    case 'maria':
-                    case 'marijuana':
-                        prezzoUnitario = 400;
-                        break;
-                    case 'fenicillina':
-                        prezzoUnitario = 380;
-                        break;
-                    default:
-                        prezzoUnitario = 0;
-                }
 
+                if (tipoCorretto) {
+                    switch (tipoCorretto) {
+                        case 'cocaina':
+                            prezzoUnitario = 500;
+                            break;
+                        case 'ketamina':
+                            prezzoUnitario = 380;
+                            break;
+                        case 'eroina':
+                            prezzoUnitario = 450;
+                            break;
+                        case 'lsd':
+                            prezzoUnitario = 420;
+                            break;
+                        case 'marijuana':
+                            prezzoUnitario = 400;
+                            break;
+                        case 'fenicillina':
+                            prezzoUnitario = 380;
+                            break;
+                        default:
+                            prezzoUnitario = 0;
+                    }
 
-                if (prezzoUnitario > 0) {
                     const valore = quantitaNum * prezzoUnitario;
                     totale += valore;
-                    dettagli += `• ${quantitaNum} ${tipo} (${formattaNumero(valore)}€)<br>`;
+                    dettagli += `• ${quantitaNum} ${tipoCorretto} (${formattaNumero(valore)}€)<br>`;
+                } else {
+                    dettagli += `• ${quantitaNum} ${tipo} (tipo non valido)<br>`;
                 }
             });
 
@@ -233,12 +252,13 @@
                 totaleNetto: totaleNetto
             });
 
-            //salva dati
+            // Salva i dati
             salvaDati();
 
             // Mostra i risultati
             mostraRisultati();
         }
+
 
         function mostraRisultati() {
 
