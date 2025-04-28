@@ -466,7 +466,10 @@
 
       function processInput() {
         const inputText = document.getElementById("inputArea").value.trim();
-        if (!inputText) return;
+        if (!inputText){
+          alert("Per favore, completa il campo correttamente!");
+          return;
+        }
 
         const families = parseFamilies(inputText);
 
