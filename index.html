@@ -1,404 +1,589 @@
 <!DOCTYPE html>
+
 <html lang="it">
+  <head>
+    <meta charset="UTF-8" />
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>Calcolo Totale Sostanze</title>
+
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            margin: 0;
-            padding: 20px;
-            overflow-x: hidden;
-        }
+      body {
+        font-family: Arial, sans-serif;
 
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-        }
+        background-color: #f4f4f9;
 
-        h1 {
-            text-align: center;
-            color: #333;
-        }
+        margin: 0;
 
-        label {
-            display: block;
-            margin: 8px 0;
-            color: #555;
-        }
+        padding: 20px;
 
-        input,
-        textarea {
-            width: 100%;
-            padding: 8px;
-            margin: 5px 0 15px;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-        }
+        overflow-x: hidden;
+      }
 
-        button {
-            padding: 10px 20px;
-            cursor: pointer;
-            border-radius: 5px;
-            border: none;
-        }
+      .container {
+        max-width: 600px;
 
-        #subtitle {
-            font-size: 1.2em;
-            /* Leggermente più grande per una maggiore visibilità */
-            color: #333;
-            /* Colore del testo più scuro per maggiore contrasto */
-            font-weight: 500;
-            /* Peso del font medio per una sensazione più elegante */
-            background-color: #f0f0f0;
-            /* Colore di sfondo chiaro per far risaltare il testo */
-            padding: 10px 15px;
-            /* Aggiungi spaziatura interna per un migliore effetto visivo */
-            border-radius: 8px;
-            /* Angoli arrotondati per un aspetto più morbido */
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-            /* Leggera ombra per il testo */
-            margin-top: 20px;
-            /* Aggiungi un po' di spazio sopra */
-            margin-bottom: 15px;
-            /* Spazio sotto per separarlo dagli altri contenuti */
-            line-height: 1.6;
-            /* Distanza tra le righe per una lettura più comoda */
-            text-align: center;
-            /* Allinea il testo al centro */
-            font-family: 'Arial', sans-serif;
-            /* Font sans-serif pulito */
-        }
+        margin: 0 auto;
 
+        background-color: white;
 
-        #addButton {
-            background-color: #4CAF50;
-            color: white;
-        }
+        padding: 20px;
 
-        #deleteButton {
-            background-color: red;
-            color: white;
-        }
+        border-radius: 8px;
 
-        #result {
-            margin-top: 20px;
-            padding: 20px;
-            background-color: #f9f9f9;
-            border-radius: 8px;
-            max-height: 60vh;
-            overflow-y: auto;
-        }
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 
-        .famiglia {
-            font-weight: bold;
-            font-size: 1.2em;
-            margin-bottom: 10px;
-        }
+        min-height: 100vh;
 
-        .dettagli,
-        .sanzione,
-        .totale-netto {
-            margin: 10px 0;
-        }
+        display: flex;
 
-        hr {
-            margin: 10px 0;
-            border: 0;
-            border-top: 1px solid #ddd;
-        }
+        flex-direction: column;
+
+        justify-content: flex-start;
+      }
+
+      h1 {
+        text-align: center;
+
+        color: #333;
+      }
+
+      label {
+        display: block;
+
+        margin: 8px 0;
+
+        color: #555;
+      }
+
+      input,
+      textarea {
+        width: 100%;
+
+        padding: 8px;
+
+        margin: 5px 0 15px;
+
+        border-radius: 5px;
+
+        border: 1px solid #ddd;
+      }
+
+      button {
+        padding: 10px 20px;
+
+        cursor: pointer;
+
+        border-radius: 5px;
+
+        border: none;
+      }
+
+      #subtitle {
+        font-size: 1.2em;
+
+        /* Leggermente più grande per una maggiore visibilità */
+
+        color: #333;
+
+        /* Colore del testo più scuro per maggiore contrasto */
+
+        font-weight: 500;
+
+        /* Peso del font medio per una sensazione più elegante */
+
+        background-color: #f0f0f0;
+
+        /* Colore di sfondo chiaro per far risaltare il testo */
+
+        padding: 10px 15px;
+
+        /* Aggiungi spaziatura interna per un migliore effetto visivo */
+
+        border-radius: 8px;
+
+        /* Angoli arrotondati per un aspetto più morbido */
+
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+
+        /* Leggera ombra per il testo */
+
+        margin-top: 20px;
+
+        /* Aggiungi un po' di spazio sopra */
+
+        margin-bottom: 15px;
+
+        /* Spazio sotto per separarlo dagli altri contenuti */
+
+        line-height: 1.6;
+
+        /* Distanza tra le righe per una lettura più comoda */
+
+        text-align: center;
+
+        /* Allinea il testo al centro */
+
+        font-family: "Arial", sans-serif;
+
+        /* Font sans-serif pulito */
+      }
+
+      #addButton {
+        background-color: #4caf50;
+
+        color: white;
+      }
+
+      #deleteButton {
+        background-color: red;
+
+        color: white;
+      }
+
+      #result {
+        margin-top: 20px;
+
+        padding: 20px;
+
+        background-color: #f9f9f9;
+
+        border-radius: 8px;
+
+        max-height: 60vh;
+
+        overflow-y: auto;
+      }
+
+      .famiglia {
+        font-weight: bold;
+
+        font-size: 1.2em;
+
+        margin-bottom: 10px;
+      }
+
+      .dettagli,
+      .sanzione,
+      .totale-netto {
+        margin: 10px 0;
+      }
+
+      hr {
+        margin: 10px 0;
+
+        border: 0;
+
+        border-top: 1px solid #ddd;
+      }
     </style>
-</head>
+  </head>
 
-<body>
-
+  <body>
     <div class="container">
-        <h1>Calcolatore di Totale Sostanze</h1>
+      <h1>Calcolatore di Totale Sostanze</h1>
 
-        <!-- Form di inserimento sostanze -->
-        <label for="famiglia">Nome Famiglia:</label>
-        <input type="text" id="famiglia" placeholder="Inserisci il nome della famiglia">
+      <!-- Form di inserimento sostanze -->
 
-        <label for="sostanze">Sostanze e Quantità (es: 600 cocaina, 1000 eroina):</label>
-        <input type="text" id="sostanze" placeholder="Inserisci sostanze e quantità">
+      <label for="famiglia">Nome Famiglia:</label>
 
-        <label for="sanzione">Sanzione (in euro):</label>
-        <input type="number" id="sanzione" placeholder="Inserisci la sanzione">
+      <input
+        type="text"
+        id="famiglia"
+        placeholder="Inserisci il nome della famiglia"
+      />
 
-        <button onclick="aggiungiRisultato()" id="addButton">Aggiungi Famiglia</button>
-        <br>
-        <button onclick="eliminaDati()" id="deleteButton">Elimina Tutto</button>
+      <label for="sostanze"
+        >Sostanze e Quantità (es: 600 cocaina, 1000 eroina):</label
+      >
 
-        <!-- Sezione per incollare testo delle famiglie e droghe -->
-        <hr>
-        <h1>Inserimento veloce (no sanzioni)</h1>
-        <p id="subtitle">NomeFamiglia : qtaDroga tipoDroga / qtaDroga tipoDroga / .. ..</p>
-        <textarea id="inputArea" placeholder="Incolla qui il testo..."></textarea>
-        <br>
-        <button onclick="processInput()">Genera</button>
+      <input
+        type="text"
+        id="sostanze"
+        placeholder="Inserisci sostanze e quantità"
+      />
 
-        <div id="result" style="display: none;">
-            <h2>Risultati</h2>
-            <div id="totale"></div>
-        </div>
+      <label for="sanzione">Sanzione (in euro):</label>
+
+      <input type="number" id="sanzione" placeholder="Inserisci la sanzione" />
+
+      <button onclick="aggiungiRisultato()" id="addButton">
+        Aggiungi Famiglia
+      </button>
+
+      <br />
+
+      <button onclick="eliminaDati()" id="deleteButton">Elimina Tutto</button>
+
+      <!-- Sezione per incollare testo delle famiglie e droghe -->
+
+      <hr />
+
+      <h1>Inserimento veloce (no sanzioni)</h1>
+
+      <p id="subtitle">
+        NomeFamiglia : qtaDroga tipoDroga / qtaDroga tipoDroga / .. ..
+      </p>
+
+      <textarea id="inputArea" placeholder="Incolla qui il testo..."></textarea>
+
+      <br />
+
+      <button onclick="processInput()">Genera</button>
+
+      <div id="result" style="display: none">
+        <h2>Risultati</h2>
+
+        <div id="totale"></div>
+      </div>
     </div>
 
     <script>
-        let risultati = [];
+      let risultati = [];
 
-        const sostanzeMappa = {
-            cocaina: ['cocaina', 'coca'],
-            ketamina: ['ketamina', 'keta'],
-            eroina: ['eroina'],
-            lsd: ['lsd', 'acido', 'francobolli'],
-            marijuana: ['maria', 'marijuana', 'erba'],
-            fenicillina: ['fenicillina']
-        };
+      const sostanzeMappa = {
+        cocaina: ["cocaina", "coca"],
 
-        // Funzioni di supporto
-        function formattaNumero(num) {
-            return num.toLocaleString('it-IT', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        ketamina: ["ketamina", "keta"],
+
+        eroina: ["eroina"],
+
+        lsd: ["lsd", "acido", "francobolli"],
+
+        marijuana: ["maria", "marijuana", "erba"],
+
+        fenicillina: ["fenicillina"],
+      };
+
+      // Funzioni di supporto
+
+      function formattaNumero(num) {
+        return num.toLocaleString("it-IT", {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        });
+      }
+
+      function salvaDati() {
+        localStorage.setItem("famiglieDroghe", JSON.stringify(risultati));
+      }
+
+      function eliminaDati() {
+        localStorage.removeItem("famiglieDroghe");
+
+        alert("Dati eliminati");
+
+        pulisciCampi();
+
+        risultati = [];
+
+        mostraRisultati();
+      }
+
+      function caricaDati() {
+        const datiSalvati = localStorage.getItem("famiglieDroghe");
+
+        if (datiSalvati) {
+          risultati = JSON.parse(datiSalvati);
+
+          mostraRisultati();
+        }
+      }
+
+      function pulisciCampi() {
+        // Pulisce i valori dei campi di input
+
+        document.getElementById("famiglia").value = "";
+
+        document.getElementById("sostanze").value = "";
+
+        document.getElementById("sanzione").value = "";
+
+        document.getElementById("inputArea").value = "";
+      }
+
+      function normalizzaTipo(tipo) {
+        // Mappiamo gli alias ai nomi canonici
+
+        for (const [tipoCanonico, alias] of Object.entries(sostanzeMappa)) {
+          if (alias.includes(tipo.toLowerCase())) {
+            return tipoCanonico; // Restituiamo il tipo canonico
+          }
         }
 
-        function salvaDati() {
-            localStorage.setItem("famiglieDroghe", JSON.stringify(risultati));
+        return tipo; // Se non troviamo l'alias, restituiamo il tipo originale
+      }
+
+      function mappaVisualizzazione(tipo) {
+        // Mappa degli alias delle sostanze
+
+        for (const [tipoCanonico, alias] of Object.entries(sostanzeMappa)) {
+          if (alias.includes(tipo.toLowerCase())) {
+            return tipoCanonico; // Restituisce il tipo canonico per la visualizzazione
+          }
         }
 
+        return tipo; // Se non troviamo l'alias, restituiamo il tipo originale
+      }
 
+      // Funzione per aggiungere il risultato dal form
 
+      // Funzione per aggiungere il risultato dal form
 
-        function eliminaDati() {
-            localStorage.removeItem("famiglieDroghe");
-            alert('Dati eliminati');
-            pulisciCampi();
-            risultati = [];
-            mostraRisultati();
+      function aggiungiRisultato() {
+        const nomeFamiglia = document.getElementById("famiglia").value;
+
+        const sostanze = document.getElementById("sostanze").value.split(",");
+
+        const sanzione =
+          parseFloat(document.getElementById("sanzione").value) || 0;
+
+        if (!nomeFamiglia || sostanze.length === 0 || isNaN(sanzione)) {
+          alert("Per favore, completa tutti i campi correttamente!");
+
+          return;
         }
 
-        function caricaDati() {
-            const datiSalvati = localStorage.getItem("famiglieDroghe");
-            if (datiSalvati) {
-                risultati = JSON.parse(datiSalvati);
-                mostraRisultati();
+        // Calcola il totale delle sostanze
 
+        let totale = 0;
+
+        let dettagli = "";
+
+        sostanze.forEach((sostanza) => {
+          const [quantita, tipo] = sostanza.trim().split(" ");
+
+          const quantitaNum = parseFloat(quantita);
+
+          const tipoNormalizzato = normalizzaTipo(tipo); // Normalizza il tipo per il calcolo
+
+          const valore = quantitaNum * getPrezzoUnitario(tipoNormalizzato);
+
+          totale += valore;
+
+          dettagli += `• ${quantitaNum} ${tipoNormalizzato} (${formattaNumero(
+            valore
+          )}€)<br>`;
+        });
+
+        // Calcola il totale netto
+
+        const totaleNetto = totale - sanzione;
+
+        // Aggiungi il risultato all'array
+
+        risultati.push({
+          famiglia: nomeFamiglia,
+
+          totale: totale,
+
+          dettagli: dettagli,
+
+          sanzione: sanzione,
+
+          totaleNetto: totaleNetto,
+        });
+
+        // Salva i dati
+
+        salvaDati();
+
+        pulisciCampi();
+
+        // Mostra i risultati
+
+        mostraRisultati();
+      }
+
+      function mostraRisultati() {
+        document.getElementById("totale").innerHTML = "Caricamento...";
+
+        document.getElementById("result").style.display = "block";
+
+        // Ordina i risultati in base al totale
+
+        risultati.sort((a, b) => b.totale - a.totale);
+
+        let resultText = "";
+
+        risultati.forEach((fam) => {
+          if (fam.totale > 0) {
+            const intestazione =
+              fam.totaleNetto >= 0
+                ? `${fam.famiglia} – ${formattaNumero(fam.totaleNetto)}€`
+                : `${fam.famiglia} – 🔻 Da prelevare: ${formattaNumero(
+                    Math.abs(fam.totaleNetto)
+                  )}€`;
+
+            // Costruisci la stringa con la sanzione solo se è maggiore di 0
+
+            let sanzioneText = "";
+
+            if (fam.sanzione > 0) {
+              sanzioneText = `<div class="sanzione">💸 Sanzione: ${formattaNumero(
+                fam.sanzione
+              )}€</div>`;
             }
-        }
 
-        function pulisciCampi() {
-            // Pulisce i valori dei campi di input
-            document.getElementById('famiglia').value = '';
-            document.getElementById('sostanze').value = '';
-            document.getElementById('sanzione').value = '';
-            document.getElementById('inputArea').value = '';
-        }
+            resultText += `
 
-
-        function normalizzaTipo(tipo) {
-            // Mappiamo gli alias ai nomi canonici
-            for (const [tipoCanonico, alias] of Object.entries(sostanzeMappa)) {
-                if (alias.includes(tipo.toLowerCase())) {
-                    return tipoCanonico; // Restituiamo il tipo canonico
-                }
-            }
-            return tipo; // Se non troviamo l'alias, restituiamo il tipo originale
-        }
-
-
-        function mappaVisualizzazione(tipo) {
-            // Mappa degli alias delle sostanze
-            for (const [tipoCanonico, alias] of Object.entries(sostanzeMappa)) {
-                if (alias.includes(tipo.toLowerCase())) {
-                    return tipoCanonico; // Restituisce il tipo canonico per la visualizzazione
-                }
-            }
-            return tipo; // Se non troviamo l'alias, restituiamo il tipo originale
-        }
-
-        // Funzione per aggiungere il risultato dal form
-        // Funzione per aggiungere il risultato dal form
-        function aggiungiRisultato() {
-            const nomeFamiglia = document.getElementById('famiglia').value;
-            const sostanze = document.getElementById('sostanze').value.split(',');
-            const sanzione = parseFloat(document.getElementById('sanzione').value) || 0;
-
-            if (!nomeFamiglia || sostanze.length === 0 || isNaN(sanzione)) {
-                alert("Per favore, completa tutti i campi correttamente!");
-                return;
-            }
-
-            // Calcola il totale delle sostanze
-            let totale = 0;
-            let dettagli = '';
-            sostanze.forEach(sostanza => {
-                const [quantita, tipo] = sostanza.trim().split(' ');
-                const quantitaNum = parseFloat(quantita);
-                const tipoNormalizzato = normalizzaTipo(tipo); // Normalizza il tipo per il calcolo
-                const valore = quantitaNum * getPrezzoUnitario(tipoNormalizzato);
-                totale += valore;
-                dettagli += `• ${quantitaNum} ${tipoNormalizzato} (${formattaNumero(valore)}€)<br>`;
-            });
-
-            // Calcola il totale netto
-            const totaleNetto = totale - sanzione;
-
-            // Aggiungi il risultato all'array
-            risultati.push({
-                famiglia: nomeFamiglia,
-                totale: totale,
-                dettagli: dettagli,
-                sanzione: sanzione,
-                totaleNetto: totaleNetto
-            });
-
-            // Salva i dati
-            salvaDati();
-
-            pulisciCampi();
-
-            // Mostra i risultati
-            mostraRisultati();
-        }
-
-        function mostraRisultati() {
-            document.getElementById('totale').innerHTML = 'Caricamento...';
-            document.getElementById('result').style.display = 'block';
-
-            // Ordina i risultati in base al totale
-            risultati.sort((a, b) => b.totale - a.totale);
-
-            let resultText = '';
-            risultati.forEach(fam => {
-                if (fam.totale > 0) {
-                    const intestazione = fam.totaleNetto >= 0
-                        ? `${fam.famiglia} – ${formattaNumero(fam.totaleNetto)}€`
-                        : `${fam.famiglia} – 🔻 Da prelevare: ${formattaNumero(Math.abs(fam.totaleNetto))}€`;
-
-                    // Costruisci la stringa con la sanzione solo se è maggiore di 0
-                    let sanzioneText = '';
-                    if (fam.sanzione > 0) {
-                        sanzioneText = `<div class="sanzione">💸 Sanzione: ${formattaNumero(fam.sanzione)}€</div>`;
-                    }
-
-                    resultText += `
                         <div class="famiglia">${intestazione}</div>
-                        <div class="dettagli">${fam.dettagli}</div>
-                        ${sanzioneText}  <!-- Mostra la sanzione solo se è > 0 -->
-                        <div class="totale-netto">
-                            ${fam.totaleNetto >= 0
-                            ? `➡️ Totale netto: ${formattaNumero(fam.totaleNetto)}€`
-                            : `🔻 Da prelevare: ${formattaNumero(Math.abs(fam.totaleNetto))}€`}
-                        </div>
-                        <br>
-                        `;
-                }
-            });
 
-            document.getElementById('totale').innerHTML = resultText;
+                        <div class="dettagli">${fam.dettagli}</div>
+
+                        ${sanzioneText}  <!-- Mostra la sanzione solo se è > 0 -->
+
+                        <div class="totale-netto">
+
+                            ${
+                              fam.totaleNetto >= 0
+                                ? `➡️ Totale netto: ${formattaNumero(
+                                    fam.totaleNetto
+                                  )}€`
+                                : `🔻 Da prelevare: ${formattaNumero(
+                                    Math.abs(fam.totaleNetto)
+                                  )}€`
+                            }
+
+                        </div>
+
+                        <br>
+
+                        `;
+          }
+        });
+
+        document.getElementById("totale").innerHTML = resultText;
+      }
+
+      // Funzioni per l'input dalla textarea
+
+      function getPrezzoUnitario(tipo) {
+        // Convertiamo il tipo in minuscolo per evitare problemi con maiuscole/minuscole
+
+        tipo = tipo.toLowerCase();
+
+        // Scorriamo la mappa delle sostanze
+
+        for (const [prezzo, alias] of Object.entries(sostanzeMappa)) {
+          // Se troviamo il tipo tra gli alias, restituiamo il prezzo
+
+          if (alias.includes(tipo)) {
+            switch (prezzo) {
+              case "cocaina":
+                return 500;
+
+              case "ketamina":
+                return 380;
+
+              case "eroina":
+                return 450;
+
+              case "lsd":
+                return 420;
+
+              case "marijuana":
+                return 400;
+
+              case "fenicillina":
+                return 380;
+
+              default:
+                return 0;
+            }
+          }
         }
 
+        // Se non trova il tipo, restituisce 0
 
-        // Funzioni per l'input dalla textarea
-        function getPrezzoUnitario(tipo) {
-            // Convertiamo il tipo in minuscolo per evitare problemi con maiuscole/minuscole
-            tipo = tipo.toLowerCase();
+        return 0;
+      }
 
-            // Scorriamo la mappa delle sostanze
-            for (const [prezzo, alias] of Object.entries(sostanzeMappa)) {
-                // Se troviamo il tipo tra gli alias, restituiamo il prezzo
-                if (alias.includes(tipo)) {
-                    switch (prezzo) {
-                        case 'cocaina':
-                            return 500;
-                        case 'ketamina':
-                            return 380;
-                        case 'eroina':
-                            return 450;
-                        case 'lsd':
-                            return 420;
-                        case 'marijuana':
-                            return 400;
-                        case 'fenicillina':
-                            return 380;
-                        default:
-                            return 0;
-                    }
-                }
+      function processInput() {
+        const inputText = document.getElementById("inputArea").value.trim();
+        if (!inputText) return;
+
+        const families = parseFamilies(inputText);
+
+        families.forEach((fam) => {
+          risultati.push({
+            famiglia: fam.intestazione,
+            totale: fam.totale,
+            dettagli: fam.dettagli,
+            sanzione: fam.sanzione,
+            totaleNetto: fam.totaleNetto,
+          });
+        });
+
+        salvaDati();
+        mostraRisultati();
+      }
+
+      function parseFamilies(input) {
+        return input
+          .split("\n")
+          .filter(Boolean)
+          .map((line) => {
+            const [familyName, drugsString] = line
+              .split(":")
+              .map((str) => str.trim());
+
+            if (!familyName || !drugsString) return null;
+
+            // Gestiamo eventuale sanzione
+            const sanctionMatch = drugsString.match(/\|\s*(\d+)/);
+            let sanction = 0;
+            let cleanDrugsString = drugsString;
+
+            if (sanctionMatch) {
+              sanction = parseFloat(sanctionMatch[1]);
+              cleanDrugsString = drugsString
+                .replace(sanctionMatch[0], "")
+                .trim();
             }
 
-            // Se non trova il tipo, restituisce 0
-            return 0;
-        }
+            const drugs = cleanDrugsString.split("/").map((drugEntry) => {
+              const parts = drugEntry.trim().split(" ");
+              const quantity = Number(parts[0]);
+              const tipoDroga = parts.slice(1).join(" ");
+              const tipoNormalizzato = normalizzaTipo(tipoDroga);
+              const prezzoUnitario = getPrezzoUnitario(tipoNormalizzato);
+              const valoreTotale = quantity * prezzoUnitario;
 
-        function processInput() {
-            const inputText = document.getElementById('inputArea').value.trim();
-            if (!inputText) return;
-
-            const families = parseFamilies(inputText);
-            families.forEach(fam => {
-                // Aggiungi i risultati delle famiglie dalla textarea all'array
-                risultati.push({
-                    famiglia: fam.intestazione,
-                    totale: fam.totaleNetto,
-                    dettagli: fam.dettagli,
-                    sanzione: 0,
-                    totaleNetto: fam.totaleNetto
-                });
+              return {
+                quantity,
+                tipoDroga: tipoNormalizzato,
+                valoreTotale,
+              };
             });
-            salvaDati();
-            mostraRisultati();
-        }
 
+            const dettagli = drugs
+              .map(
+                (d) =>
+                  `• ${d.quantity} ${d.tipoDroga} (${formattaNumero(
+                    d.valoreTotale
+                  )}€)`
+              )
+              .join("<br>");
 
-        function parseFamilies(input) {
-            return input.split('\n').filter(Boolean).map(line => {
-                const [familyName, drugsString] = line.split(':').map(str => str.trim());
+            const totaleNetto = drugs.reduce(
+              (acc, d) => acc + d.valoreTotale,
+              0
+            );
 
-                // Eliminare doppi spazi in familyName e drugsString
-                const cleanFamilyName = familyName.replace(/\s+/g, ' ');
-                const cleanDrugsString = drugsString.replace(/\s+/g, ' ');
+            return {
+              intestazione: familyName,
+              dettagli: dettagli,
+              totale: totaleNetto,
+              sanzione: sanction,
+              totaleNetto: totaleNetto - sanction,
+            };
+          })
+          .filter(Boolean);
+      }
 
-                if (!cleanFamilyName || !cleanDrugsString) return null;
-
-                const drugs = cleanDrugsString.split('/').map(drugEntry => {
-                    const parts = drugEntry.trim().split(' ');
-                    const quantity = Number(parts[0]);
-                    const tipoDroga = parts.slice(1).join(' '); // Tipo di sostanza (alias o nome canonico)
-                    const tipoNormalizzato = normalizzaTipo(tipoDroga); // Normalizza il tipo per il calcolo
-                    const prezzoUnitario = getPrezzoUnitario(tipoNormalizzato);
-                    const valoreTotale = quantity * prezzoUnitario;
-                    return { quantity, tipoDroga: tipoNormalizzato, valoreTotale, tipoDrogaVisualizzazione: mappaVisualizzazione(tipoDroga) };
-                });
-
-                const dettagli = drugs.map(d => `• ${d.quantity} ${d.tipoDrogaVisualizzazione} (${formattaNumero(d.valoreTotale)}€)`).join('<br>');
-                const totaleNetto = drugs.reduce((sum, d) => sum + d.valoreTotale, 0);
-
-                return {
-                    intestazione: cleanFamilyName,
-                    dettagli,
-                    totaleNetto
-                };
-            }).filter(Boolean);
-
-            salvaDati();
-            mostraRisultati();
-        }
-
-
-
-        window.onload = caricaDati;
+      window.onload = caricaDati;
     </script>
-
-</body>
-
+  </body>
 </html>
