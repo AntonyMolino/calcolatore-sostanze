@@ -172,6 +172,15 @@
 
       <input type="number" id="sanzione" placeholder="Inserisci la sanzione" />
 
+      <label for="gratuita"
+        >Droghe della sanzione (es: 400 marijuana, 500 ketamina):</label
+      >
+      <input
+        type="text"
+        id="gratuita"
+        placeholder="Quantità e tipo (separate da virgole)"
+      />
+
       <button onclick="aggiungiRisultato()" id="addButton">
         Aggiungi Famiglia
       </button>
@@ -187,14 +196,16 @@
       <h1>Inserimento veloce</h1>
 
       <p id="subtitle">
-        NomeFamiglia : qtaDroga tipoDroga / qtaDroga2 ..  | sanzioneDaScalare
+        NomeFamiglia : qtaDroga tipoDroga / qtaDroga2 tipoDroga2 .. |
+        sanzioneDaScalare / qtaDrogaSanz tipoDrogaSanz / qtaDrogaSanz2
+        tipoDrogaSanz2
       </p>
 
       <textarea id="inputArea" placeholder="Incolla qui il testo..."></textarea>
 
       <br />
 
-      <button onclick="processInput()"  id="addButton" >Genera</button>
+      <button onclick="processInput()" id="addButton">Genera</button>
 
       <div id="result" style="display: none">
         <h2>Risultati</h2>
@@ -265,6 +276,8 @@
         document.getElementById("sanzione").value = "";
 
         document.getElementById("inputArea").value = "";
+
+        document.getElementById("gratuita").value = "";
       }
 
       function normalizzaTipo(tipo) {
@@ -297,66 +310,57 @@
 
       function aggiungiRisultato() {
         const nomeFamiglia = document.getElementById("famiglia").value;
-
         const sostanze = document.getElementById("sostanze").value.split(",");
-
+        const gratuite = document.getElementById("gratuita").value.split(","); // <-- nuovo campo
         const sanzione =
           parseFloat(document.getElementById("sanzione").value) || 0;
 
-        if (!nomeFamiglia || sostanze.length === 0 || isNaN(sanzione)) {
+        if (!nomeFamiglia || (sostanze.length === 0 && gratuite.length === 0)) {
           alert("Per favore, completa tutti i campi correttamente!");
-
           return;
         }
 
-        // Calcola il totale delle sostanze
-
         let totale = 0;
-
         let dettagli = "";
 
         sostanze.forEach((sostanza) => {
-          const [quantita, tipo] = sostanza.trim().split(" ");
-
+          if (sostanza.trim() === "") return; // Skippa vuoti
+          const [quantita, ...tipoParts] = sostanza.trim().split(/\s+/);
+          const tipo = tipoParts.join(" ");
           const quantitaNum = parseFloat(quantita);
-
-          const tipoNormalizzato = normalizzaTipo(tipo); // Normalizza il tipo per il calcolo
-
+          const tipoNormalizzato = normalizzaTipo(tipo);
           const valore = quantitaNum * getPrezzoUnitario(tipoNormalizzato);
-
           totale += valore;
-
           dettagli += `• ${quantitaNum} ${tipoNormalizzato} (${formattaNumero(
             valore
           )}€)<br>`;
         });
 
-        // Calcola il totale netto
+        // Gestisci anche le droghe gratuite
+        if (gratuite.some((g) => g.trim() !== "")) {
+          dettagli += `<br><strong>Droghe sanzione :</strong><br>`;
+          gratuite.forEach((sostanza) => {
+            if (sostanza.trim() === "") return;
+            const [quantita, ...tipoParts] = sostanza.trim().split(/\s+/);
+            const tipo = tipoParts.join(" ");
+            const quantitaNum = parseFloat(quantita);
+            const tipoNormalizzato = normalizzaTipo(tipo);
+            dettagli += `• ${quantitaNum} ${tipoNormalizzato} (GRATIS)<br>`;
+          });
+        }
 
         const totaleNetto = totale - sanzione;
 
-        // Aggiungi il risultato all'array
-
         risultati.push({
           famiglia: nomeFamiglia,
-
           totale: totale,
-
           dettagli: dettagli,
-
           sanzione: sanzione,
-
           totaleNetto: totaleNetto,
         });
 
-        // Salva i dati
-
         salvaDati();
-
         pulisciCampi();
-
-        // Mostra i risultati
-
         mostraRisultati();
       }
 
@@ -466,7 +470,7 @@
 
       function processInput() {
         const inputText = document.getElementById("inputArea").value.trim();
-        if (!inputText){
+        if (!inputText) {
           alert("Per favore, completa il campo correttamente!");
           return;
         }
@@ -498,19 +502,13 @@
 
             if (!familyName || !drugsString) return null;
 
-            // Gestiamo eventuale sanzione
-            const sanctionMatch = drugsString.match(/\|\s*(\d+)/);
-            let sanction = 0;
-            let cleanDrugsString = drugsString;
+            // Separiamo la parte di droghe normali e la parte della sanzione+drogaSanzione
+            const [paidDrugsPart, sanctionAndSanctionDrugsPart] = drugsString
+              .split("|")
+              .map((str) => str.trim());
 
-            if (sanctionMatch) {
-              sanction = parseFloat(sanctionMatch[1]);
-              cleanDrugsString = drugsString
-                .replace(sanctionMatch[0], "")
-                .trim();
-            }
-
-            const drugs = cleanDrugsString.split("/").map((drugEntry) => {
+            // 1. Droghe normali
+            const paidDrugs = paidDrugsPart.split("/").map((drugEntry) => {
               const parts = drugEntry.trim().split(" ");
               const quantity = Number(parts[0]);
               const tipoDroga = parts.slice(1).join(" ");
@@ -525,7 +523,34 @@
               };
             });
 
-            const dettagli = drugs
+            // 2. Sanzione e droghe da portare senza pagamento
+            let sanction = 0;
+            let sanctionDrugs = [];
+
+            if (sanctionAndSanctionDrugsPart) {
+              const sanctionParts = sanctionAndSanctionDrugsPart
+                .split("/")
+                .map((str) => str.trim());
+
+              if (sanctionParts.length > 0) {
+                sanction = parseFloat(sanctionParts[0]) || 0;
+
+                sanctionDrugs = sanctionParts.slice(1).map((drugEntry) => {
+                  const parts = drugEntry.trim().split(" ");
+                  const quantity = Number(parts[0]);
+                  const tipoDroga = parts.slice(1).join(" ");
+                  const tipoNormalizzato = normalizzaTipo(tipoDroga);
+
+                  return {
+                    quantity,
+                    tipoDroga: tipoNormalizzato,
+                  };
+                });
+              }
+            }
+
+            // 3. Dettagli testuali
+            const dettagliVendita = paidDrugs
               .map(
                 (d) =>
                   `• ${d.quantity} ${d.tipoDroga} (${formattaNumero(
@@ -534,17 +559,25 @@
               )
               .join("<br>");
 
-            const totaleNetto = drugs.reduce(
+            const dettagliSanzione =
+              sanctionDrugs.length > 0
+                ? `<br><strong>Droghe sanzione :</strong><br>` +
+                  sanctionDrugs
+                    .map((d) => `• ${d.quantity} ${d.tipoDroga}`)
+                    .join("<br>")
+                : "";
+
+            const totalePagato = paidDrugs.reduce(
               (acc, d) => acc + d.valoreTotale,
               0
             );
 
             return {
               intestazione: familyName,
-              dettagli: dettagli,
-              totale: totaleNetto,
+              dettagli: dettagliVendita + dettagliSanzione,
+              totale: totalePagato,
               sanzione: sanction,
-              totaleNetto: totaleNetto - sanction,
+              totaleNetto: totalePagato - sanction,
             };
           })
           .filter(Boolean);
