@@ -270,7 +270,6 @@
             mostraRisultati();
         }
 
-
         function mostraRisultati() {
             document.getElementById('totale').innerHTML = 'Caricamento...';
             document.getElementById('result').style.display = 'block';
@@ -285,10 +284,16 @@
                         ? `${fam.famiglia} – ${formattaNumero(fam.totaleNetto)}€`
                         : `${fam.famiglia} – 🔻 Da prelevare: ${formattaNumero(Math.abs(fam.totaleNetto))}€`;
 
+                    // Costruisci la stringa con la sanzione solo se è maggiore di 0
+                    let sanzioneText = '';
+                    if (fam.sanzione > 0) {
+                        sanzioneText = `<div class="sanzione">💸 Sanzione: ${formattaNumero(fam.sanzione)}€</div>`;
+                    }
+
                     resultText += `
                 <div class="famiglia">${intestazione}</div>
                 <div class="dettagli">${fam.dettagli}</div>
-                <div class="sanzione">💸 Sanzione: ${formattaNumero(fam.sanzione)}€</div>
+                ${sanzioneText}  <!-- Mostra la sanzione solo se è > 0 -->
                 <div class="totale-netto">
                     ${fam.totaleNetto >= 0
                             ? `➡️ Totale netto: ${formattaNumero(fam.totaleNetto)}€`
@@ -301,6 +306,7 @@
 
             document.getElementById('totale').innerHTML = resultText;
         }
+
 
         // Funzioni per l'input dalla textarea
         function getPrezzoUnitario(tipo) {
