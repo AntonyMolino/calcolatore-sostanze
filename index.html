@@ -291,16 +291,16 @@
                     }
 
                     resultText += `
-                <div class="famiglia">${intestazione}</div>
-                <div class="dettagli">${fam.dettagli}</div>
-                ${sanzioneText}  <!-- Mostra la sanzione solo se è > 0 -->
-                <div class="totale-netto">
-                    ${fam.totaleNetto >= 0
+                        <div class="famiglia">${intestazione}</div>
+                        <div class="dettagli">${fam.dettagli}</div>
+                        ${sanzioneText}  <!-- Mostra la sanzione solo se è > 0 -->
+                        <div class="totale-netto">
+                            ${fam.totaleNetto >= 0
                             ? `➡️ Totale netto: ${formattaNumero(fam.totaleNetto)}€`
                             : `🔻 Da prelevare: ${formattaNumero(Math.abs(fam.totaleNetto))}€`}
-                </div>
-                <br>
-            `;
+                        </div>
+                        <br>
+                        `;
                 }
             });
 
@@ -363,9 +363,14 @@
         function parseFamilies(input) {
             return input.split('\n').filter(Boolean).map(line => {
                 const [familyName, drugsString] = line.split(':').map(str => str.trim());
-                if (!familyName || !drugsString) return null;
 
-                const drugs = drugsString.split('/').map(drugEntry => {
+                // Eliminare doppi spazi in familyName e drugsString
+                const cleanFamilyName = familyName.replace(/\s+/g, ' ');
+                const cleanDrugsString = drugsString.replace(/\s+/g, ' ');
+
+                if (!cleanFamilyName || !cleanDrugsString) return null;
+
+                const drugs = cleanDrugsString.split('/').map(drugEntry => {
                     const parts = drugEntry.trim().split(' ');
                     const quantity = Number(parts[0]);
                     const tipoDroga = parts.slice(1).join(' '); // Tipo di sostanza (alias o nome canonico)
@@ -379,14 +384,16 @@
                 const totaleNetto = drugs.reduce((sum, d) => sum + d.valoreTotale, 0);
 
                 return {
-                    intestazione: familyName,
+                    intestazione: cleanFamilyName,
                     dettagli,
                     totaleNetto
                 };
             }).filter(Boolean);
+
             salvaDati();
             mostraRisultati();
         }
+
 
 
         window.onload = caricaDati;
