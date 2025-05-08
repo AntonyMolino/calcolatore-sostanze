@@ -580,7 +580,7 @@
               dettagli: dettagliVendita + dettagliSanzione,
               totale: totalePagato,
               sanzione: sanction,
-              totaleNetto: totalePagato - sanction,
+              totaleNetto: totalePagato - sanction * 0.8,
             };
           })
           .filter(Boolean);
