@@ -126,18 +126,30 @@ function popolaFormPrezzi() {
 }
 
 function salvaPrezziDaUI() {
-    for (const tipo in prezziDroga) {
-        const input = document.getElementById("price-" + tipo);
-        if (!input) continue;
-        const val = parseFloat(input.value);
-        if (!isNaN(val) && val >= 0) {
-            prezziDroga[tipo] = val;
-        }
+  const pwd = prompt("Inserisci la password per salvare i prezzi:");
+
+  // password da modificare
+  const passwordCorretta = "Cartello2025";
+
+  if (pwd !== passwordCorretta) {
+    alert("Password errata. Operazione annullata.");
+    return;
+  }
+
+  for (const tipo in prezziDroga) {
+    const input = document.getElementById("price-" + tipo);
+    if (!input) continue;
+    const val = parseFloat(input.value);
+    if (!isNaN(val) && val >= 0) {
+      prezziDroga[tipo] = val;
     }
-    salvaPrezzi();
-    alert("Prezzi aggiornati.");
-    mostraRisultati(); // ricalcola visuale con i nuovi prezzi (per le nuove famiglie)
+  }
+
+  salvaPrezzi();
+  alert("Prezzi aggiornati.");
+  mostraRisultati();
 }
+
 
 // Prezzo unitario basato su alias + prezziDroga
 function getPrezzoUnitario(tipo) {
@@ -631,4 +643,5 @@ window.onload = function () {
     caricaPrezzi();
     popolaFormPrezzi();
     caricaDati();
+
 };
