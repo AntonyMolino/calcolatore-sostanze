@@ -49,10 +49,18 @@
     }
 
     button {
-      padding: 10px 20px;
-      cursor: pointer;
-      border-radius: 5px;
+      padding: 8px 14px;
+      border-radius: 6px;
       border: none;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 600;
+      background-color: #e5e7eb;
+      transition: 0.15s ease;
+    }
+
+    button:hover {
+      background-color: #d4d4d8;
     }
 
     #subtitle {
@@ -580,8 +588,8 @@
       const container = document.getElementById("result");
       const target = document.getElementById("totale");
       if (!risultati.length) {
-        container.style.display = "none";
-        target.innerHTML = "";
+        container.style.display = "block";
+        target.innerHTML = "<em>Nessun risultato ancora. Aggiungi una famiglia.</em>";
         return;
       }
 
