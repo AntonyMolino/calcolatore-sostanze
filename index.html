@@ -1,192 +1,193 @@
 <!DOCTYPE html>
 <html lang="it">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Calcolo Totale Sostanze</title>
 
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f9;
-        margin: 0;
-        padding: 20px;
-        overflow-x: hidden;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calcolo Totale Sostanze</title>
 
-      .container {
-        max-width: 600px;
-        margin: 0 auto;
-        background-color: white;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-      }
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      margin: 0;
+      padding: 20px;
+      overflow-x: hidden;
+    }
 
-      h1 {
-        text-align: center;
-        color: #333;
-      }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
 
-      label {
-        display: block;
-        margin: 8px 0;
-        color: #555;
-      }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
 
-      input,
-      textarea {
-        width: 100%;
-        padding: 8px;
-        margin: 5px 0 15px;
-        border-radius: 5px;
-        border: 1px solid #ddd;
-      }
+    label {
+      display: block;
+      margin: 8px 0;
+      color: #555;
+    }
 
-      button {
-        padding: 10px 20px;
-        cursor: pointer;
-        border-radius: 5px;
-        border: none;
-      }
+    input,
+    textarea {
+      width: 100%;
+      padding: 8px;
+      margin: 5px 0 15px;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+    }
 
-      #subtitle {
-        font-size: 0.9em;
-        color: #555;
-        background-color: #eef1f5;
-        padding: 10px 15px;
-        border-radius: 8px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
-        margin-top: 20px;
-        margin-bottom: 20px;
-        line-height: 1.4;
-        text-align: center;
-        font-family: "Arial", sans-serif;
-      }
+    button {
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 5px;
+      border: none;
+    }
 
-      #addButton {
-        background-color: #4caf50;
-        color: white;
-      }
+    #subtitle {
+      font-size: 0.9em;
+      color: #555;
+      background-color: #eef1f5;
+      padding: 10px 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+      margin-top: 20px;
+      margin-bottom: 20px;
+      line-height: 1.4;
+      text-align: center;
+      font-family: "Arial", sans-serif;
+    }
 
-      #deleteButton {
-        background-color: red;
-        color: white;
-      }
+    #addButton {
+      background-color: #4caf50;
+      color: white;
+    }
 
-      #result {
-        margin-top: 20px;
-        padding: 20px;
-        background-color: #f9f9f9;
-        border-radius: 8px;
-        max-height: 60vh;
-        overflow-y: auto;
-      }
+    #deleteButton {
+      background-color: red;
+      color: white;
+    }
 
-      .famiglia {
-        font-weight: bold;
-        font-size: 1.2em;
-        margin-bottom: 10px;
-      }
+    #result {
+      margin-top: 20px;
+      padding: 20px;
+      background-color: #f9f9f9;
+      border-radius: 8px;
+      max-height: 60vh;
+      overflow-y: auto;
+    }
 
-      .dettagli,
-      .sanzione,
-      .totale-netto {
-        margin: 10px 0;
-      }
+    .famiglia {
+      font-weight: bold;
+      font-size: 1.2em;
+      margin-bottom: 10px;
+    }
 
-      hr {
-        margin: 10px 0;
-        border: 0;
-        border-top: 1px solid #ddd;
-      }
+    .dettagli,
+    .sanzione,
+    .totale-netto {
+      margin: 10px 0;
+    }
 
-      .chips-container {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 6px;
-        margin-bottom: 10px;
-      }
+    hr {
+      margin: 10px 0;
+      border: 0;
+      border-top: 1px solid #ddd;
+    }
 
-      .chip {
-        display: inline-block;
-        padding: 4px 10px;
-        border-radius: 999px;
-        background-color: #e0e7ff;
-        font-size: 0.8rem;
-        cursor: pointer;
-        border: 1px solid #c7d2fe;
-        user-select: none;
-      }
+    .chips-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
 
-      .chip:hover {
-        background-color: #c7d2fe;
-      }
+    .chip {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background-color: #e0e7ff;
+      font-size: 0.8rem;
+      cursor: pointer;
+      border: 1px solid #c7d2fe;
+      user-select: none;
+    }
 
-      #exportButtons {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        margin-top: 10px;
-        margin-bottom: 10px;
-      }
+    .chip:hover {
+      background-color: #c7d2fe;
+    }
 
-      #exportButtons button {
-        background-color: #3b82f6;
-        color: white;
-      }
+    #exportButtons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
 
-      #priceManager {
-        margin-top: 25px;
-        padding: 15px;
-        background-color: #f3f4f6;
-        border-radius: 8px;
-      }
+    #exportButtons button {
+      background-color: #3b82f6;
+      color: white;
+    }
 
-      .price-row {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 10px;
-        margin-bottom: 8px;
-      }
+    #priceManager {
+      margin-top: 25px;
+      padding: 15px;
+      background-color: #f3f4f6;
+      border-radius: 8px;
+    }
 
-      .price-row label {
-        margin: 0;
-        font-size: 0.9rem;
-      }
+    .price-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
 
-      .price-row input {
-        width: 120px;
-      }
+    .price-row label {
+      margin: 0;
+      font-size: 0.9rem;
+    }
 
-      #savePricesButton {
-        background-color: #10b981;
-        color: white;
-        margin-top: 10px;
-      }
+    .price-row input {
+      width: 120px;
+    }
 
-      .note-prezzo {
-        font-size: 0.8rem;
-        color: #6b7280;
-        margin-top: 5px;
-      }
+    #savePricesButton {
+      background-color: #10b981;
+      color: white;
+      margin-top: 10px;
+    }
 
-      .warning-prezzo {
-        color: #b91c1c;
-        font-size: 0.85rem;
-        margin-top: 4px;
-      }
-    </style>
-  </head>
+    .note-prezzo {
+      font-size: 0.8rem;
+      color: #6b7280;
+      margin-top: 5px;
+    }
 
-  <body>
-    <div class="container">
-      <strong><code>Alias:</strong>  Puoi usare degli alias per i tipi di droga : </code>
+    .warning-prezzo {
+      color: #b91c1c;
+      font-size: 0.85rem;
+      margin-top: 4px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <strong><code>Alias:</strong>  Puoi usare degli alias per i tipi di droga : </code>
       <ul>
         <li><code>"coca" per "cocaina"</code></li>
         <li><code>"keta" per "ketamina"</code></li>
@@ -199,20 +200,12 @@
 
       <!-- Form di inserimento sostanze -->
       <label for="famiglia">Nome Famiglia:</label>
-      <input
-        type="text"
-        id="famiglia"
-        placeholder="Inserisci il nome della famiglia"
-      />
+      <input type="text" id="famiglia" placeholder="Inserisci il nome della famiglia" />
 
       <label for="sostanze">
         Sostanze e Quantità (es: 600 cocaina, 1000 eroina):
       </label>
-      <input
-        type="text"
-        id="sostanze"
-        placeholder="Inserisci sostanze e quantità"
-      />
+      <input type="text" id="sostanze" placeholder="Inserisci sostanze e quantità" />
       <div class="chips-container">
         <span class="chip" onclick="aggiungiDroga('cocaina','sostanze')">cocaina</span>
         <span class="chip" onclick="aggiungiDroga('ketamina','sostanze')">ketamina</span>
@@ -230,11 +223,7 @@
       <label for="gratuita">
         Droghe della settimana scorsa sanzionate (es: 400 marijuana, 500 ketamina):
       </label>
-      <input
-        type="text"
-        id="gratuita"
-        placeholder="Quantità e tipo (separate da virgole)"
-      />
+      <input type="text" id="gratuita" placeholder="Quantità e tipo (separate da virgole)" />
       <div class="chips-container">
         <span class="chip" onclick="aggiungiDroga('cocaina','gratuita')">cocaina</span>
         <span class="chip" onclick="aggiungiDroga('ketamina','gratuita')">ketamina</span>
@@ -304,332 +293,331 @@
       <div id="result" style="display: none">
         <h2>Risultati</h2>
 
-       <div id="exportButtons">
-  	<button onclick="exportJSON()">Esporta JSON</button>
-  	<button onclick="exportCSV()">Esporta CSV</button>
-  	<button onclick="copiaReport()">Copia Report</button>
-       </div>
+        <div id="exportButtons">
+          <!-- <button onclick="exportJSON()">Esporta JSON</button>
+  	<button onclick="exportCSV()">Esporta CSV</button> -->
+          <button onclick="copiaReport()">Copia Report</button>
+        </div>
 
-	
+
 
         <div id="totale"></div>
       </div>
-    </div>
+  </div>
 
-    <script>
-      let risultati = [];
+  <script>
+    let risultati = [];
 
-      const sostanzeMappa = {
-        cocaina: ["cocaina", "coca"],
-        ketamina: ["ketamina", "keta"],
-        eroina: ["eroina"],
-        lsd: ["lsd", "acido", "francobolli"],
-        marijuana: ["maria", "marijuana", "erba"],
-        fenicillina: ["fenicillina"],
-      };
+    const sostanzeMappa = {
+      cocaina: ["cocaina", "coca"],
+      ketamina: ["ketamina", "keta"],
+      eroina: ["eroina"],
+      lsd: ["lsd", "acido", "francobolli"],
+      marijuana: ["maria", "marijuana", "erba"],
+      fenicillina: ["fenicillina"],
+    };
 
-      // Prezzi modificabili
-      let prezziDroga = {
-        cocaina: 500,
-        ketamina: 380,
-        eroina: 450,
-        lsd: 420,
-        marijuana: 400,
-        fenicillina: 380,
-      };
+    // Prezzi modificabili
+    let prezziDroga = {
+      cocaina: 500,
+      ketamina: 380,
+      eroina: 450,
+      lsd: 420,
+      marijuana: 400,
+      fenicillina: 380,
+    };
 
-      function salvaDati() {
-        localStorage.setItem("famiglieDroghe", JSON.stringify(risultati));
-      }
+    function salvaDati() {
+      localStorage.setItem("famiglieDroghe", JSON.stringify(risultati));
+    }
 
-      function caricaDati() {
-        const datiSalvati = localStorage.getItem("famiglieDroghe");
-        if (datiSalvati) {
-          risultati = JSON.parse(datiSalvati);
-          mostraRisultati();
-        }
-      }
-
-      function eliminaDati() {
-        if (!confirm("Sei sicuro di eliminare tutti i dati?")) return;
-        localStorage.removeItem("famiglieDroghe");
-        risultati = [];
-        pulisciCampi();
+    function caricaDati() {
+      const datiSalvati = localStorage.getItem("famiglieDroghe");
+      if (datiSalvati) {
+        risultati = JSON.parse(datiSalvati);
         mostraRisultati();
       }
+    }
 
-      function pulisciCampi() {
-        document.getElementById("famiglia").value = "";
-        document.getElementById("sostanze").value = "";
-        document.getElementById("sanzione").value = "";
-        document.getElementById("inputArea").value = "";
-        document.getElementById("gratuita").value = "";
+    function eliminaDati() {
+      if (!confirm("Sei sicuro di eliminare tutti i dati?")) return;
+      localStorage.removeItem("famiglieDroghe");
+      risultati = [];
+      pulisciCampi();
+      mostraRisultati();
+    }
+
+    function pulisciCampi() {
+      document.getElementById("famiglia").value = "";
+      document.getElementById("sostanze").value = "";
+      document.getElementById("sanzione").value = "";
+      document.getElementById("inputArea").value = "";
+      document.getElementById("gratuita").value = "";
+    }
+
+    function normalizzaTipo(tipo) {
+      for (const [tipoCanonico, alias] of Object.entries(sostanzeMappa)) {
+        if (alias.includes(tipo.toLowerCase())) {
+          return tipoCanonico;
+        }
       }
+      return tipo;
+    }
+    // Somiglianza tra parole (Levenshtein semplificato)
+    function similarity(a, b) {
+      a = a.toLowerCase();
+      b = b.toLowerCase();
+      let matches = 0;
+      const len = Math.min(a.length, b.length);
 
-      function normalizzaTipo(tipo) {
-        for (const [tipoCanonico, alias] of Object.entries(sostanzeMappa)) {
-          if (alias.includes(tipo.toLowerCase())) {
-            return tipoCanonico;
+      for (let i = 0; i < len; i++) {
+        if (a[i] === b[i]) matches++;
+      }
+      return matches / Math.max(a.length, b.length);
+    }
+
+    // Restituisce il miglior suggerimento per un tipo sconosciuto
+    function suggerisciDroga(tipoInserito) {
+      tipoInserito = tipoInserito.toLowerCase();
+      let bestMatch = null;
+      let bestScore = 0;
+
+      for (const [canonico, alias] of Object.entries(sostanzeMappa)) {
+        for (const a of alias) {
+          const score = similarity(tipoInserito, a);
+          if (score > bestScore) {
+            bestScore = score;
+            bestMatch = canonico;
           }
         }
-        return tipo;
       }
-// Somiglianza tra parole (Levenshtein semplificato)
-function similarity(a, b) {
-  a = a.toLowerCase();
-  b = b.toLowerCase();
-  let matches = 0;
-  const len = Math.min(a.length, b.length);
 
-  for (let i = 0; i < len; i++) {
-    if (a[i] === b[i]) matches++;
-  }
-  return matches / Math.max(a.length, b.length);
-}
+      if (bestScore >= 0.45) {
+        return bestMatch;
+      }
 
-// Restituisce il miglior suggerimento per un tipo sconosciuto
-function suggerisciDroga(tipoInserito) {
-  tipoInserito = tipoInserito.toLowerCase();
-  let bestMatch = null;
-  let bestScore = 0;
+      return null; // nessun suggerimento utile
+    }
 
-  for (const [canonico, alias] of Object.entries(sostanzeMappa)) {
-    for (const a of alias) {
-      const score = similarity(tipoInserito, a);
-      if (score > bestScore) {
-        bestScore = score;
-        bestMatch = canonico;
+
+    function formattaNumero(num) {
+      return num.toLocaleString("it-IT", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      });
+    }
+
+    // Gestione prezzi in localStorage
+    function caricaPrezzi() {
+      const salvati = localStorage.getItem("prezziDroga");
+      if (salvati) {
+        try {
+          const parsed = JSON.parse(salvati);
+          prezziDroga = { ...prezziDroga, ...parsed };
+        } catch (e) {
+          console.warn("Prezzi salvati corrotti, uso default.");
+        }
       }
     }
-  }
 
-  if (bestScore >= 0.45) {
-    return bestMatch;
-  }
+    function salvaPrezzi() {
+      localStorage.setItem("prezziDroga", JSON.stringify(prezziDroga));
+    }
 
-  return null; // nessun suggerimento utile
-}
+    function popolaFormPrezzi() {
+      for (const tipo in prezziDroga) {
+        const input = document.getElementById("price-" + tipo);
+        if (input) {
+          input.value = prezziDroga[tipo];
+        }
+      }
+    }
 
+    function salvaPrezziDaUI() {
+      for (const tipo in prezziDroga) {
+        const input = document.getElementById("price-" + tipo);
+        if (!input) continue;
+        const val = parseFloat(input.value);
+        if (!isNaN(val) && val >= 0) {
+          prezziDroga[tipo] = val;
+        }
+      }
+      salvaPrezzi();
+      alert("Prezzi aggiornati.");
+      mostraRisultati(); // ricalcola visuale con i nuovi prezzi (per le nuove famiglie)
+    }
 
-      function formattaNumero(num) {
-        return num.toLocaleString("it-IT", {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        });
+    // Prezzo unitario basato su alias + prezziDroga
+    function getPrezzoUnitario(tipo) {
+      tipo = tipo.toLowerCase();
+      for (const [tipoCanonico, alias] of Object.entries(sostanzeMappa)) {
+        if (alias.includes(tipo)) {
+          return prezziDroga[tipoCanonico] || 0;
+        }
+      }
+      return 0;
+    }
+
+    // Aggiunta droghe cliccando i chip
+    function aggiungiDroga(tipo, campoId) {
+      const input = document.getElementById(campoId);
+      if (!input) return;
+
+      let val = input.value;
+      if (val === "") {
+        // campo vuoto → solo tipo
+        input.value = tipo;
+        input.focus();
+        return;
       }
 
-      // Gestione prezzi in localStorage
-      function caricaPrezzi() {
-        const salvati = localStorage.getItem("prezziDroga");
-        if (salvati) {
-          try {
-            const parsed = JSON.parse(salvati);
-            prezziDroga = { ...prezziDroga, ...parsed };
-          } catch (e) {
-            console.warn("Prezzi salvati corrotti, uso default.");
+      // togli solo gli spazi finali, non quelli all'inizio
+      let trimmedVal = val.replace(/\s+$/g, "");
+
+      // se dopo aver tolto gli spazi è vuoto
+      if (trimmedVal === "") {
+        input.value = tipo;
+        input.focus();
+        return;
+      }
+
+      // ultimo segmento dopo l'ultima virgola
+      const lastSegment = trimmedVal.split(",").pop().trim();
+      const soloNumeroSegmentoFinale = /^\d+$/.test(lastSegment);
+
+      if (soloNumeroSegmentoFinale) {
+        // Esempio:
+        // "100"                    -> "100 cocaina, "
+        // "100 cocaina, 200"       -> "100 cocaina, 200 cocaina, "
+        input.value = trimmedVal + " " + tipo + ", ";
+      } else {
+        // caso generico:
+        // "cocaina"                -> "cocaina, ketamina"
+        // "100 cocaina"            -> "100 cocaina, ketamina"
+        if (!trimmedVal.endsWith(",")) trimmedVal += ",";
+        input.value = trimmedVal + " " + tipo;
+      }
+
+      input.focus();
+    }
+
+
+
+    // Aggiunta dal form
+    function aggiungiRisultato() {
+      const nomeFamiglia = document.getElementById("famiglia").value.trim();
+      const sostanze = document
+        .getElementById("sostanze")
+        .value.split(",");
+      const gratuite = document
+        .getElementById("gratuita")
+        .value.split(",");
+      const sanzione =
+        parseFloat(document.getElementById("sanzione").value) || 0;
+
+      if (!nomeFamiglia || (sostanze.length === 0 && gratuite.length === 0)) {
+        alert("Per favore, completa tutti i campi correttamente!");
+        return;
+      }
+
+      let totale = 0;
+      let dettagli = "";
+
+      sostanze.forEach((sostanza) => {
+        if (sostanza.trim() === "") return;
+        const [quantita, ...tipoParts] = sostanza.trim().split(/\s+/);
+        const tipo = tipoParts.join(" ");
+        const quantitaNum = parseFloat(quantita);
+        if (isNaN(quantitaNum)) return;
+        const tipoNormalizzato = normalizzaTipo(tipo);
+        const prezzoUnitario = getPrezzoUnitario(tipoNormalizzato);
+        const valore = quantitaNum * prezzoUnitario;
+        totale += valore;
+        if (prezzoUnitario === 0) {
+          const suggerimento = suggerisciDroga(tipoNormalizzato);
+          if (suggerimento) {
+            dettagli += `• ${quantitaNum} ${tipoNormalizzato} (⚠️ prezzo non impostato – forse intendevi: <strong>${suggerimento}</strong>)<br>`;
+          } else {
+            dettagli += `• ${quantitaNum} ${tipoNormalizzato} (⚠️ prezzo non impostato – nessun suggerimento)<br>`;
           }
+        } else {
+          dettagli += `• ${quantitaNum} ${tipoNormalizzato} (${formattaNumero(
+            valore
+          )}€)<br>`;
         }
-      }
+      });
 
-      function salvaPrezzi() {
-        localStorage.setItem("prezziDroga", JSON.stringify(prezziDroga));
-      }
-
-      function popolaFormPrezzi() {
-        for (const tipo in prezziDroga) {
-          const input = document.getElementById("price-" + tipo);
-          if (input) {
-            input.value = prezziDroga[tipo];
-          }
-        }
-      }
-
-      function salvaPrezziDaUI() {
-        for (const tipo in prezziDroga) {
-          const input = document.getElementById("price-" + tipo);
-          if (!input) continue;
-          const val = parseFloat(input.value);
-          if (!isNaN(val) && val >= 0) {
-            prezziDroga[tipo] = val;
-          }
-        }
-        salvaPrezzi();
-        alert("Prezzi aggiornati.");
-        mostraRisultati(); // ricalcola visuale con i nuovi prezzi (per le nuove famiglie)
-      }
-
-      // Prezzo unitario basato su alias + prezziDroga
-      function getPrezzoUnitario(tipo) {
-        tipo = tipo.toLowerCase();
-        for (const [tipoCanonico, alias] of Object.entries(sostanzeMappa)) {
-          if (alias.includes(tipo)) {
-            return prezziDroga[tipoCanonico] || 0;
-          }
-        }
-        return 0;
-      }
-
-      // Aggiunta droghe cliccando i chip
-      function aggiungiDroga(tipo, campoId) {
-  const input = document.getElementById(campoId);
-  if (!input) return;
-
-  let val = input.value;
-  if (val === "") {
-    // campo vuoto → solo tipo
-    input.value = tipo;
-    input.focus();
-    return;
-  }
-
-  // togli solo gli spazi finali, non quelli all'inizio
-  let trimmedVal = val.replace(/\s+$/g, "");
-
-  // se dopo aver tolto gli spazi è vuoto
-  if (trimmedVal === "") {
-    input.value = tipo;
-    input.focus();
-    return;
-  }
-
-  // ultimo segmento dopo l'ultima virgola
-  const lastSegment = trimmedVal.split(",").pop().trim();
-  const soloNumeroSegmentoFinale = /^\d+$/.test(lastSegment);
-
-  if (soloNumeroSegmentoFinale) {
-    // Esempio:
-    // "100"                    -> "100 cocaina, "
-    // "100 cocaina, 200"       -> "100 cocaina, 200 cocaina, "
-    input.value = trimmedVal + " " + tipo + ", ";
-  } else {
-    // caso generico:
-    // "cocaina"                -> "cocaina, ketamina"
-    // "100 cocaina"            -> "100 cocaina, ketamina"
-    if (!trimmedVal.endsWith(",")) trimmedVal += ",";
-    input.value = trimmedVal + " " + tipo;
-  }
-
-  input.focus();
-}
-
-
-
-      // Aggiunta dal form
-      function aggiungiRisultato() {
-        const nomeFamiglia = document.getElementById("famiglia").value.trim();
-        const sostanze = document
-          .getElementById("sostanze")
-          .value.split(",");
-        const gratuite = document
-          .getElementById("gratuita")
-          .value.split(",");
-        const sanzione =
-          parseFloat(document.getElementById("sanzione").value) || 0;
-
-        if (!nomeFamiglia || (sostanze.length === 0 && gratuite.length === 0)) {
-          alert("Per favore, completa tutti i campi correttamente!");
-          return;
-        }
-
-        let totale = 0;
-        let dettagli = "";
-
-        sostanze.forEach((sostanza) => {
+      if (gratuite.some((g) => g.trim() !== "")) {
+        dettagli += `<br><strong>Droghe sanzione :</strong><br>`;
+        gratuite.forEach((sostanza) => {
           if (sostanza.trim() === "") return;
           const [quantita, ...tipoParts] = sostanza.trim().split(/\s+/);
           const tipo = tipoParts.join(" ");
           const quantitaNum = parseFloat(quantita);
           if (isNaN(quantitaNum)) return;
           const tipoNormalizzato = normalizzaTipo(tipo);
-          const prezzoUnitario = getPrezzoUnitario(tipoNormalizzato);
-          const valore = quantitaNum * prezzoUnitario;
-          totale += valore;
-          if (prezzoUnitario === 0) {
-  const suggerimento = suggerisciDroga(tipoNormalizzato);
-  if (suggerimento) {
-    dettagli += `• ${quantitaNum} ${tipoNormalizzato} (⚠️ prezzo non impostato – forse intendevi: <strong>${suggerimento}</strong>)<br>`;
-  } else {
-    dettagli += `• ${quantitaNum} ${tipoNormalizzato} (⚠️ prezzo non impostato – nessun suggerimento)<br>`;
-  }
-} else {
-            dettagli += `• ${quantitaNum} ${tipoNormalizzato} (${formattaNumero(
-              valore
-            )}€)<br>`;
-          }
+          dettagli += `• ${quantitaNum} ${tipoNormalizzato} (GRATIS)<br>`;
         });
-
-        if (gratuite.some((g) => g.trim() !== "")) {
-          dettagli += `<br><strong>Droghe sanzione :</strong><br>`;
-          gratuite.forEach((sostanza) => {
-            if (sostanza.trim() === "") return;
-            const [quantita, ...tipoParts] = sostanza.trim().split(/\s+/);
-            const tipo = tipoParts.join(" ");
-            const quantitaNum = parseFloat(quantita);
-            if (isNaN(quantitaNum)) return;
-            const tipoNormalizzato = normalizzaTipo(tipo);
-            dettagli += `• ${quantitaNum} ${tipoNormalizzato} (GRATIS)<br>`;
-          });
-        }
-
-        const sanzioneRidotta = sanzione * 0.8;
-        const totaleNetto = totale - sanzioneRidotta;
-
-        risultati.push({
-          famiglia: nomeFamiglia,
-          totale: totale,
-          dettagli: dettagli,
-          sanzione: sanzione,
-          totaleNetto: totaleNetto,
-        });
-
-        salvaDati();
-        pulisciCampi();
-        mostraRisultati();
       }
 
-      function mostraRisultati() {
-        const container = document.getElementById("result");
-        const target = document.getElementById("totale");
-        if (!risultati.length) {
-          container.style.display = "none";
-          target.innerHTML = "";
-          return;
-        }
+      const sanzioneRidotta = sanzione * 0.8;
+      const totaleNetto = totale - sanzioneRidotta;
 
-        target.innerHTML = "Caricamento...";
-        container.style.display = "block";
+      risultati.push({
+        famiglia: nomeFamiglia,
+        totale: totale,
+        dettagli: dettagli,
+        sanzione: sanzione,
+        totaleNetto: totaleNetto,
+      });
 
-        // Ordina per totale netto
-        risultati.sort((a, b) => b.totaleNetto - a.totaleNetto);
+      salvaDati();
+      pulisciCampi();
+      mostraRisultati();
+    }
 
-        let resultText = "";
+    function mostraRisultati() {
+      const container = document.getElementById("result");
+      const target = document.getElementById("totale");
+      if (!risultati.length) {
+        container.style.display = "none";
+        target.innerHTML = "";
+        return;
+      }
 
-        risultati.forEach((fam) => {
-          if (fam) {
-            const intestazione =
-              fam.totaleNetto >= 0
-                ? `${fam.famiglia} – ${formattaNumero(fam.totaleNetto)}€`
-                : `${fam.famiglia} – 🔻 Da prelevare: ${formattaNumero(
-                    Math.abs(fam.totaleNetto)
-                  )}€`;
+      target.innerHTML = "Caricamento...";
+      container.style.display = "block";
 
-            let sanzioneText = "";
-            if (fam.sanzione > 0) {
-              sanzioneText = `<div class="sanzione">💸 Sanzione : ${formattaNumero(
-                fam.sanzione * 0.8
-              )}€</div>`;
-            }
+      // Ordina per totale netto
+      risultati.sort((a, b) => b.totaleNetto - a.totaleNetto);
+
+      let resultText = "";
+
+      risultati.forEach((fam) => {
+        if (fam) {
+          const intestazione =
+            fam.totaleNetto >= 0
+              ? `${fam.famiglia} – ${formattaNumero(fam.totaleNetto)}€`
+              : `${fam.famiglia} – 🔻 Da prelevare: ${formattaNumero(
+                Math.abs(fam.totaleNetto)
+              )}€`;
+
+          let sanzioneText = "";
+          if (fam.sanzione > 0) {
+            sanzioneText = `<div class="sanzione">💸 Sanzione : ${formattaNumero(
+              fam.sanzione * 0.8
+            )}€</div>`;
+          }
 
           resultText += `
   <div class="famiglia">${intestazione}</div>
   <div class="dettagli">${fam.dettagli}</div>
   ${sanzioneText}
   <div class="totale-netto">
-    ${
-      fam.totaleNetto >= 0
-        ? `➡️ Totale netto: ${formattaNumero(fam.totaleNetto)}€`
-        : `🔻 Da prelevare: ${formattaNumero(Math.abs(fam.totaleNetto))}€`
-    }
+    ${fam.totaleNetto >= 0
+              ? `➡️ Totale netto: ${formattaNumero(fam.totaleNetto)}€`
+              : `🔻 Da prelevare: ${formattaNumero(Math.abs(fam.totaleNetto))}€`
+            }
   </div>
 
   <button onclick="modificaFamiglia(${risultati.indexOf(fam)})" style="background:#f59e0b;color:white;margin-right:5px;">Modifica</button>
@@ -638,148 +626,150 @@ function suggerisciDroga(tipoInserito) {
   <br><br>
 `;
 
-          }
-        });
-
-        target.innerHTML = resultText;
-      }
-
-      // Parsing da textarea "inserimento veloce"
-      function processInput() {
-        const inputText = document.getElementById("inputArea").value.trim();
-        if (!inputText) {
-          alert("Per favore, completa il campo correttamente!");
-          return;
         }
+      });
 
-        const families = parseFamilies(inputText);
+      target.innerHTML = resultText;
+    }
 
-        families.forEach((fam) => {
-          risultati.push({
-            famiglia: fam.intestazione,
-            totale: fam.totale,
-            dettagli: fam.dettagli,
-            sanzione: fam.sanzione,
-            totaleNetto: fam.totaleNetto,
-          });
+    // Parsing da textarea "inserimento veloce"
+    function processInput() {
+      const inputText = document.getElementById("inputArea").value.trim();
+      if (!inputText) {
+        alert("Per favore, completa il campo correttamente!");
+        return;
+      }
+
+      const families = parseFamilies(inputText);
+
+      families.forEach((fam) => {
+        risultati.push({
+          famiglia: fam.intestazione,
+          totale: fam.totale,
+          dettagli: fam.dettagli,
+          sanzione: fam.sanzione,
+          totaleNetto: fam.totaleNetto,
         });
+      });
 
-        salvaDati();
-        mostraRisultati();
-      }
+      salvaDati();
+      mostraRisultati();
+    }
 
-      function parseFamilies(input) {
-        return input
-          .split("\n")
-          .filter(Boolean)
-          .map((line) => {
-            const [familyName, drugsString] = line
-              .split(":")
-              .map((str) => str.trim());
+    function parseFamilies(input) {
+      return input
+        .split("\n")
+        .filter(Boolean)
+        .map((line) => {
+          const [familyName, drugsString] = line
+            .split(":")
+            .map((str) => str.trim());
 
-            if (!familyName || !drugsString) return null;
+          if (!familyName || !drugsString) return null;
 
-            const [paidDrugsPart, sanctionAndSanctionDrugsPart] = drugsString
-              .split("|")
-              .map((str) => str.trim());
+          const [paidDrugsPart, sanctionAndSanctionDrugsPart] = drugsString
+            .split("|")
+            .map((str) => str.trim());
 
-            const paidDrugs = paidDrugsPart.split("/").map((drugEntry) => {
-              const parts = drugEntry.trim().split(" ");
-              const quantity = Number(parts[0]);
-              const tipoDroga = parts.slice(1).join(" ");
-              const tipoNormalizzato = normalizzaTipo(tipoDroga);
-              const prezzoUnitario = getPrezzoUnitario(tipoNormalizzato);
-              const valoreTotale = quantity * prezzoUnitario;
-
-              return {
-                quantity,
-                tipoDroga: tipoNormalizzato,
-                valoreTotale,
-                prezzoUnitario,
-              };
-            });
-
-            let sanction = 0;
-            let sanctionDrugs = [];
-
-            if (sanctionAndSanctionDrugsPart) {
-              const sanctionParts = sanctionAndSanctionDrugsPart
-                .split("/")
-                .map((str) => str.trim());
-
-              if (sanctionParts.length > 0) {
-                sanction = parseFloat(sanctionParts[0]) || 0;
-
-                sanctionDrugs = sanctionParts.slice(1).map((drugEntry) => {
-                  const parts = drugEntry.trim().split(" ");
-                  const quantity = Number(parts[0]);
-                  const tipoDroga = parts.slice(1).join(" ");
-                  const tipoNormalizzato = normalizzaTipo(tipoDroga);
-
-                  return {
-                    quantity,
-                    tipoDroga: tipoNormalizzato,
-                  };
-                });
-              }
-            }
-
-            const dettagliVendita = paidDrugs
-              .map((d) =>
-               d.prezzoUnitario === 0
-  ? (() => {
-      const sug = suggerisciDroga(d.tipoDroga);
-      if (sug) {
-        return `• ${d.quantity} ${d.tipoDroga} (⚠️ prezzo non impostato – forse intendevi: ${sug})`;
-      }
-      return `• ${d.quantity} ${d.tipoDroga} (⚠️ prezzo non impostato – nessun suggerimento)`;
-    })()
-                  : `• ${d.quantity} ${d.tipoDroga} (${formattaNumero(
-                      d.valoreTotale
-                    )}€)`
-              )
-              .join("<br>");
-
-            const dettagliSanzione =
-              sanctionDrugs.length > 0
-                ? `<br><strong>Droghe sanzione :</strong><br>` +
-                  sanctionDrugs
-                    .map(
-                      (d) =>
-                        `• ${d.quantity} ${d.tipoDroga} (GRATIS)`
-                    )
-                    .join("<br>")
-                : "";
-
-            const totalePagato = paidDrugs.reduce(
-              (acc, d) => acc + d.valoreTotale,
-              0
-            );
+          const paidDrugs = paidDrugsPart.split("/").map((drugEntry) => {
+            const parts = drugEntry.trim().split(" ");
+            const quantity = Number(parts[0]);
+            const tipoDroga = parts.slice(1).join(" ");
+            const tipoNormalizzato = normalizzaTipo(tipoDroga);
+            const prezzoUnitario = getPrezzoUnitario(tipoNormalizzato);
+            const valoreTotale = quantity * prezzoUnitario;
 
             return {
-              intestazione: familyName,
-              dettagli: dettagliVendita + dettagliSanzione,
-              totale: totalePagato,
-              sanzione: sanction,
-              totaleNetto: totalePagato - sanction * 0.8,
+              quantity,
+              tipoDroga: tipoNormalizzato,
+              valoreTotale,
+              prezzoUnitario,
             };
-          })
-          .filter(Boolean);
-      }
+          });
 
-      // Export
-      function downloadFile(filename, content, mime) {
-        const blob = new Blob([content], { type: mime });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = filename;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-      }
+          let sanction = 0;
+          let sanctionDrugs = [];
 
+          if (sanctionAndSanctionDrugsPart) {
+            const sanctionParts = sanctionAndSanctionDrugsPart
+              .split("/")
+              .map((str) => str.trim());
+
+            if (sanctionParts.length > 0) {
+              sanction = parseFloat(sanctionParts[0]) || 0;
+
+              sanctionDrugs = sanctionParts.slice(1).map((drugEntry) => {
+                const parts = drugEntry.trim().split(" ");
+                const quantity = Number(parts[0]);
+                const tipoDroga = parts.slice(1).join(" ");
+                const tipoNormalizzato = normalizzaTipo(tipoDroga);
+
+                return {
+                  quantity,
+                  tipoDroga: tipoNormalizzato,
+                };
+              });
+            }
+          }
+
+          const dettagliVendita = paidDrugs
+            .map((d) =>
+              d.prezzoUnitario === 0
+                ? (() => {
+                  const sug = suggerisciDroga(d.tipoDroga);
+                  if (sug) {
+                    return `• ${d.quantity} ${d.tipoDroga} (⚠️ prezzo non impostato – forse intendevi: ${sug})`;
+                  }
+                  return `• ${d.quantity} ${d.tipoDroga} (⚠️ prezzo non impostato – nessun suggerimento)`;
+                })()
+                : `• ${d.quantity} ${d.tipoDroga} (${formattaNumero(
+                  d.valoreTotale
+                )}€)`
+            )
+            .join("<br>");
+
+          const dettagliSanzione =
+            sanctionDrugs.length > 0
+              ? `<br><strong>Droghe sanzione :</strong><br>` +
+              sanctionDrugs
+                .map(
+                  (d) =>
+                    `• ${d.quantity} ${d.tipoDroga} (GRATIS)`
+                )
+                .join("<br>")
+              : "";
+
+          const totalePagato = paidDrugs.reduce(
+            (acc, d) => acc + d.valoreTotale,
+            0
+          );
+
+          return {
+            intestazione: familyName,
+            dettagli: dettagliVendita + dettagliSanzione,
+            totale: totalePagato,
+            sanzione: sanction,
+            totaleNetto: totalePagato - sanction * 0.8,
+          };
+        })
+        .filter(Boolean);
+    }
+
+    // Export
+    function downloadFile(filename, content, mime) {
+      const blob = new Blob([content], { type: mime });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+
+    /*
       function exportJSON() {
         if (!risultati.length) {
           alert("Nessun dato da esportare.");
@@ -815,117 +805,119 @@ function suggerisciDroga(tipoInserito) {
           .join("\n");
         downloadFile("report_sostanze.csv", csv, "text/csv");
       }
+      */
 
-// ====== COPIA REPORT ======
-function copiaReport() {
-  if (!risultati.length) {
-    alert("Nessun dato da copiare.");
-    return;
-  }
+    // ====== COPIA REPORT ======
+    function copiaReport() {
+      if (!risultati.length) {
+        alert("Nessun dato da copiare.");
+        return;
+      }
 
-  let testo = "PAGAMENTI MAFIE/GANG\n\n";
+      let testo = "PAGAMENTI MAFIE/GANG\n\n";
 
-  risultati.forEach((fam) => {
-    
-    // Titolo famiglia
-    if (fam.totaleNetto >= 0) {
-      testo += `${fam.famiglia} – ${formattaNumero(fam.totaleNetto)}€\n`;
-    } else {
-      testo += `${fam.famiglia} – 🔻 Da prelevare: ${formattaNumero(Math.abs(fam.totaleNetto))}€\n`;
+      risultati.forEach((fam) => {
+
+        // Titolo famiglia
+        if (fam.totaleNetto >= 0) {
+          testo += `${fam.famiglia} – ${formattaNumero(fam.totaleNetto)}€\n`;
+        } else {
+          testo += `${fam.famiglia} – 🔻 Da prelevare: ${formattaNumero(Math.abs(fam.totaleNetto))}€\n`;
+        }
+
+        // Dettagli puliti
+        let dettagli = fam.dettagli
+          .replace(/<br>/g, "\n")
+          .replace(/<[^>]*>/g, "")
+          .trim(); // ← elimina spazi e righe vuote finali
+
+        // Rimuove eventuali righe vuote doppie
+        dettagli = dettagli.replace(/\n{2,}/g, "\n");
+
+        testo += dettagli + "\n";
+
+        // Sanzione (attaccata ai dettagli, NO SPAZI)
+        if (fam.sanzione > 0) {
+          testo += `💸 Sanzione : ${formattaNumero(fam.sanzione * 0.8)}€\n`;
+        }
+
+        // Totale netto subito sotto, NESSUNA RIGA VUOTA PRIMA
+        if (fam.totaleNetto >= 0) {
+          testo += `➡️ Totale netto: ${formattaNumero(fam.totaleNetto)}€\n`;
+        } else {
+          testo += `🔻 Da prelevare: ${formattaNumero(Math.abs(fam.totaleNetto))}€\n`;
+        }
+
+        // Riga vuota SOLO tra famiglie
+        testo += `\n`;
+      });
+
+      navigator.clipboard.writeText(testo).then(() => {
+        alert("Report copiato negli appunti.");
+      });
     }
 
-    // Dettagli puliti
-    let dettagli = fam.dettagli
-      .replace(/<br>/g, "\n")
-      .replace(/<[^>]*>/g, "")
-      .trim(); // ← elimina spazi e righe vuote finali
 
-    // Rimuove eventuali righe vuote doppie
-    dettagli = dettagli.replace(/\n{2,}/g, "\n");
 
-    testo += dettagli + "\n";
-
-    // Sanzione (attaccata ai dettagli, NO SPAZI)
-    if (fam.sanzione > 0) {
-      testo += `💸 Sanzione : ${formattaNumero(fam.sanzione * 0.8)}€\n`;
+    // ====== ELIMINA / MODIFICA SINGOLA FAMIGLIA ======
+    function eliminaFamiglia(index) {
+      if (!confirm("Eliminare questa famiglia?")) return;
+      risultati.splice(index, 1);
+      salvaDati();
+      mostraRisultati();
     }
 
-    // Totale netto subito sotto, NESSUNA RIGA VUOTA PRIMA
-    if (fam.totaleNetto >= 0) {
-      testo += `➡️ Totale netto: ${formattaNumero(fam.totaleNetto)}€\n`;
-    } else {
-      testo += `🔻 Da prelevare: ${formattaNumero(Math.abs(fam.totaleNetto))}€\n`;
+    function modificaFamiglia(index) {
+      const fam = risultati[index];
+
+      // Rimetti nel form i dati originali
+      document.getElementById("famiglia").value = fam.famiglia;
+      document.getElementById("sostanze").value = estraiSostanzeDaDettagli(fam.dettagli, false);
+      document.getElementById("gratuita").value = estraiSostanzeDaDettagli(fam.dettagli, true);
+      document.getElementById("sanzione").value = fam.sanzione;
+
+      // Rimuovi temporaneamente la famiglia dalla lista
+      risultati.splice(index, 1);
+      salvaDati();
+      mostraRisultati();
     }
 
-    // Riga vuota SOLO tra famiglie
-    testo += `\n`;
-  });
+    // Estrae sostanze normali o gratuite dal dettaglio HTML
+    function estraiSostanzeDaDettagli(dettagli, gratuite = false) {
+      const lines = dettagli.replace(/<br>/g, "\n").split("\n").map(s => s.trim());
+      let output = [];
 
-  navigator.clipboard.writeText(testo).then(() => {
-    alert("Report copiato negli appunti.");
-  });
-}
+      let inGratis = false;
 
+      for (let line of lines) {
+        if (line.toLowerCase().includes("droghe sanzione")) {
+          inGratis = true;
+          continue;
+        }
 
+        if (!line.startsWith("•")) continue;
+        if (inGratis !== gratuite) continue;
 
-// ====== ELIMINA / MODIFICA SINGOLA FAMIGLIA ======
-function eliminaFamiglia(index) {
-  if (!confirm("Eliminare questa famiglia?")) return;
-  risultati.splice(index, 1);
-  salvaDati();
-  mostraRisultati();
-}
+        const cleaned = line
+          .replace("•", "")
+          .replace("(GRATIS)", "")
+          .replace("(⚠️ prezzo non impostato)", "")
+          .replace(/\(.*?\)/, "")
+          .trim();
 
-function modificaFamiglia(index) {
-  const fam = risultati[index];
+        if (cleaned) output.push(cleaned);
+      }
 
-  // Rimetti nel form i dati originali
-  document.getElementById("famiglia").value = fam.famiglia;
-  document.getElementById("sostanze").value = estraiSostanzeDaDettagli(fam.dettagli, false);
-  document.getElementById("gratuita").value = estraiSostanzeDaDettagli(fam.dettagli, true);
-  document.getElementById("sanzione").value = fam.sanzione;
-
-  // Rimuovi temporaneamente la famiglia dalla lista
-  risultati.splice(index, 1);
-  salvaDati();
-  mostraRisultati();
-}
-
-// Estrae sostanze normali o gratuite dal dettaglio HTML
-function estraiSostanzeDaDettagli(dettagli, gratuite = false) {
-  const lines = dettagli.replace(/<br>/g, "\n").split("\n").map(s => s.trim());
-  let output = [];
-
-  let inGratis = false;
-
-  for (let line of lines) {
-    if (line.toLowerCase().includes("droghe sanzione")) {
-      inGratis = true;
-      continue;
+      return output.join(", ");
     }
 
-    if (!line.startsWith("•")) continue;
-    if (inGratis !== gratuite) continue;
 
-    const cleaned = line
-      .replace("•", "")
-      .replace("(GRATIS)", "")
-      .replace("(⚠️ prezzo non impostato)", "")
-      .replace(/\(.*?\)/, "")
-      .trim();
+    window.onload = function () {
+      caricaPrezzi();
+      popolaFormPrezzi();
+      caricaDati();
+    };
+  </script>
+</body>
 
-    if (cleaned) output.push(cleaned);
-  }
-
-  return output.join(", ");
-}
-
-
-      window.onload = function () {
-        caricaPrezzi();
-        popolaFormPrezzi();
-        caricaDati();
-      };
-    </script>
-  </body>
 </html>
