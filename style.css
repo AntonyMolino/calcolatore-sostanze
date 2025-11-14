@@ -1,0 +1,260 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 20px;
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+label {
+    display: block;
+    margin: 8px 0;
+    color: #555;
+}
+
+input,
+textarea {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0 15px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+button {
+    padding: 8px 14px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    background-color: #e5e7eb;
+    transition: 0.15s ease;
+}
+
+button:hover {
+    background-color: #d4d4d8;
+}
+
+#subtitle {
+    font-size: 0.9em;
+    color: #555;
+    background-color: #eef1f5;
+    padding: 10px 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+    margin-top: 20px;
+    margin-bottom: 20px;
+    line-height: 1.4;
+    text-align: center;
+    font-family: "Arial", sans-serif;
+}
+
+#addButton {
+    background-color: #4caf50;
+    color: white;
+}
+
+#deleteButton {
+    background-color: red;
+    color: white;
+}
+
+#result {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+.famiglia {
+    font-weight: bold;
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+.dettagli,
+.sanzione,
+.totale-netto {
+    margin: 10px 0;
+}
+
+hr {
+    margin: 10px 0;
+    border: 0;
+    border-top: 1px solid #ddd;
+}
+
+.chips-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 10px;
+}
+
+.chip {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background-color: #e0e7ff;
+    font-size: 0.8rem;
+    cursor: pointer;
+    border: 1px solid #c7d2fe;
+    user-select: none;
+}
+
+.chip:hover {
+    background-color: #c7d2fe;
+}
+
+#exportButtons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#exportButtons button {
+    background-color: #3b82f6;
+    color: white;
+}
+
+#priceManager {
+    margin-top: 25px;
+    padding: 15px;
+    background-color: #f3f4f6;
+    border-radius: 8px;
+}
+
+.price-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.price-row label {
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+.price-row input {
+    width: 120px;
+}
+
+#savePricesButton {
+    background-color: #10b981;
+    color: white;
+    margin-top: 10px;
+}
+
+.note-prezzo {
+    font-size: 0.8rem;
+    color: #6b7280;
+    margin-top: 5px;
+}
+
+.warning-prezzo {
+    color: #b91c1c;
+    font-size: 0.85rem;
+    margin-top: 4px;
+}
+
+/* Modalità DARK */
+body.dark {
+    background-color: #1a1a1a;
+    color: #e5e5e5;
+}
+
+body.dark .container {
+    background-color: #242424;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.06);
+}
+
+body.dark input,
+body.dark textarea {
+    background-color: #2e2e2e;
+    color: #fff;
+    border: 1px solid #444;
+}
+
+body.dark #result {
+    background-color: #2a2a2a;
+}
+
+body.dark button {
+    background-color: #3a3a3a;
+    color: #fff;
+}
+
+body.dark .chip {
+    background-color: #3a3a55;
+    border-color: #5151a5;
+    color: #fff;
+}
+
+body.dark .chip:hover {
+    background-color: #5050c0;
+}
+
+body.dark .price-row label {
+    color: #ddd;
+}
+
+/* Subtitle */
+body.dark #subtitle {
+    background-color: #2a2a2a;
+    color: #e5e5e5;
+    box-shadow: 0 2px 5px rgba(255, 255, 255, 0.05);
+}
+
+/* Price Manager box */
+body.dark #priceManager {
+    background-color: #2a2a2a;
+    border-radius: 8px;
+    color: #ddd;
+}
+
+/* Etichette nel price manager */
+body.dark #priceManager label {
+    color: #e5e5e5;
+}
+
+/* Input dentro price manager (ma già coperti dal tuo dark input generale) */
+body.dark #priceManager input {
+    background-color: #333;
+    color: #fff;
+    border: 1px solid #555;
+}
+
+/* Nota e warning */
+body.dark .note-prezzo {
+    color: #bbb;
+}
+
+body.dark .warning-prezzo {
+    color: #f28b82;
+    /* rosso più tenue */
+}
