@@ -190,6 +190,83 @@
       font-size: 0.85rem;
       margin-top: 4px;
     }
+
+    /* Modalità DARK */
+    body.dark {
+      background-color: #1a1a1a;
+      color: #e5e5e5;
+    }
+
+    body.dark .container {
+      background-color: #242424;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.06);
+    }
+
+    body.dark input,
+    body.dark textarea {
+      background-color: #2e2e2e;
+      color: #fff;
+      border: 1px solid #444;
+    }
+
+    body.dark #result {
+      background-color: #2a2a2a;
+    }
+
+    body.dark button {
+      background-color: #3a3a3a;
+      color: #fff;
+    }
+
+    body.dark .chip {
+      background-color: #3a3a55;
+      border-color: #5151a5;
+      color: #fff;
+    }
+
+    body.dark .chip:hover {
+      background-color: #5050c0;
+    }
+
+    body.dark .price-row label {
+      color: #ddd;
+    }
+
+    /* Subtitle */
+    body.dark #subtitle {
+      background-color: #2a2a2a;
+      color: #e5e5e5;
+      box-shadow: 0 2px 5px rgba(255, 255, 255, 0.05);
+    }
+
+    /* Price Manager box */
+    body.dark #priceManager {
+      background-color: #2a2a2a;
+      border-radius: 8px;
+      color: #ddd;
+    }
+
+    /* Etichette nel price manager */
+    body.dark #priceManager label {
+      color: #e5e5e5;
+    }
+
+    /* Input dentro price manager (ma già coperti dal tuo dark input generale) */
+    body.dark #priceManager input {
+      background-color: #333;
+      color: #fff;
+      border: 1px solid #555;
+    }
+
+    /* Nota e warning */
+    body.dark .note-prezzo {
+      color: #bbb;
+    }
+
+    body.dark .warning-prezzo {
+      color: #f28b82;
+      /* rosso più tenue */
+    }
   </style>
 </head>
 
@@ -205,6 +282,8 @@
       </ul>
 
       <h1>Calcolatore di Totale Sostanze</h1>
+      <button id="themeToggle" style="margin-bottom:15px;">🌙 Dark Mode</button>
+
 
       <!-- Form di inserimento sostanze -->
       <label for="famiglia">Nome Famiglia:</label>
@@ -864,6 +943,29 @@
         alert("Report copiato negli appunti.");
       });
     }
+
+
+    // === DARK MODE ===
+    const toggle = document.getElementById("themeToggle");
+
+    // Carica tema da localStorage
+    if (localStorage.getItem("tema") === "dark") {
+      document.body.classList.add("dark");
+      toggle.textContent = "☀️ Light Mode";
+    }
+
+    // Clic sul toggle
+    toggle.addEventListener("click", () => {
+      document.body.classList.toggle("dark");
+
+      if (document.body.classList.contains("dark")) {
+        localStorage.setItem("tema", "dark");
+        toggle.textContent = "☀️ Light Mode";
+      } else {
+        localStorage.setItem("tema", "light");
+        toggle.textContent = "🌙 Dark Mode";
+      }
+    });
 
 
 
