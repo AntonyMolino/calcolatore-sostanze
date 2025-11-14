@@ -125,17 +125,28 @@ function popolaFormPrezzi() {
     }
 }
 
-function salvaPrezziDaUI() {
+async function salvaPrezziDaUI() {
   const pwd = prompt("Inserisci la password per salvare i prezzi:");
-
-  // password da modificare
-  const passwordCorretta = "Cartello2025";
-
-  if (pwd !== passwordCorretta) {
-    alert("Password errata. Operazione annullata.");
+  if (!pwd) {
+    alert("Operazione annullata.");
     return;
   }
 
+  // HASH DELLA PASSWORD CORRETTA (da sostituire con il tuo hash)
+const passwordHashCorretta = "b1f5906b2d723f4371bc64578e66559889be7643bfafbdde59ebe2693384a0b1";
+
+  // Calcola hash della password inserita
+  const enc = new TextEncoder().encode(pwd);
+  const hashBuffer = await crypto.subtle.digest("SHA-256", enc);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  const hashHex = hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
+
+  if (hashHex !== passwordHashCorretta) {
+    alert("Password errata.");
+    return;
+  }
+
+  // Se siamo qui → password ok
   for (const tipo in prezziDroga) {
     const input = document.getElementById("price-" + tipo);
     if (!input) continue;
@@ -149,6 +160,7 @@ function salvaPrezziDaUI() {
   alert("Prezzi aggiornati.");
   mostraRisultati();
 }
+
 
 
 // Prezzo unitario basato su alias + prezziDroga
