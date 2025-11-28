@@ -38,6 +38,7 @@
         <span class="chip" onclick="aggiungiDroga('lsd','sostanze')">lsd</span>
         <span class="chip" onclick="aggiungiDroga('marijuana','sostanze')">marijuana</span>
         <span class="chip" onclick="aggiungiDroga('fenicillina','sostanze')">fenicillina</span>
+        <span class="chip" onclick="aggiungiDroga('metanfetamina','sostanze')">metanfetamina</span>
       </div>
 
       <label for="sanzione">
@@ -56,6 +57,7 @@
         <span class="chip" onclick="aggiungiDroga('lsd','gratuita')">lsd</span>
         <span class="chip" onclick="aggiungiDroga('marijuana','gratuita')">marijuana</span>
         <span class="chip" onclick="aggiungiDroga('fenicillina','gratuita')">fenicillina</span>
+        <span class="chip" onclick="aggiungiDroga('metanfetamina','gratuita')">metanfetamina</span>
       </div>
 
       <button onclick="aggiungiRisultato()" id="addButton">
@@ -109,6 +111,10 @@
           <label for="price-fenicillina">Fenicillina (€)</label>
           <input type="number" step="10" id="price-fenicillina" />
         </div>
+        <div class="price-row">
+          <label for="price-metanfetamina">Metanfetamina (€)</label>
+          <input type="number" step="10" id="price-metanfetamina" />
+        </div>
         <button id="savePricesButton" onclick="salvaPrezziDaUI()">Salva prezzi</button>
         <div class="warning-prezzo">
           ⚠️ Se il prezzo di una sostanza è 0, nei risultati vedrai un avviso "prezzo non impostato".
@@ -132,5 +138,6 @@
 
   <script src="script.js" defer></script>
 </body>
+
 
 </html>
