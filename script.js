@@ -7,6 +7,7 @@ const sostanzeMappa = {
     lsd: ["lsd", "acido", "francobolli"],
     marijuana: ["maria", "marijuana", "erba"],
     fenicillina: ["fenicillina"],
+    metanfetamina: ["metanfetamina", "meta", "meth"],
 };
 
 // Prezzi modificabili
@@ -15,8 +16,9 @@ let prezziDroga = {
     ketamina: 380,
     eroina: 450,
     lsd: 420,
-    marijuana: 400,
+    marijuana: 480,
     fenicillina: 380,
+    metanfetamina: 600,
 };
 
 function salvaDati() {
@@ -657,3 +659,4 @@ window.onload = function () {
     caricaDati();
 
 };
+
