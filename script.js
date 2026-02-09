@@ -12,11 +12,11 @@ const sostanzeMappa = {
 
 // Prezzi modificabili
 let prezziDroga = {
-    cocaina: 500,
-    ketamina: 380,
-    eroina: 450,
-    lsd: 420,
-    marijuana: 480,
+    cocaina: 510,
+    ketamina: 500,
+    eroina: 490,
+    lsd: 570,
+    marijuana: 520,
     fenicillina: 380,
     metanfetamina: 600,
 };
@@ -659,4 +659,5 @@ window.onload = function () {
     caricaDati();
 
 };
+
 
